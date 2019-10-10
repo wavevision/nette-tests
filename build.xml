@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="Wavevision NetteTests" default="init">
-
     <property name="bin" value="vendor/bin"/>
     <property name="codeSnifferRuleset" value="codesniffer-ruleset.xml"/>
+    <property name="coverage" value="${temp}/coverage"/>
+    <property name="coverageClover" value="${coverage}/coverage.xml"/>
     <property name="phpBin" value="php"/>
     <property name="src" value="src"/>
     <property name="temp" value="temp"/>
@@ -97,6 +98,18 @@
         </exec>
     </target>
 
+    <target name="test:ci" description="Run tests and publish to Coveralls" depends="test:coverage">
+        <exec
+                executable="${bin}/php-coveralls"
+                logoutput="true"
+                passthru="true"
+                checkreturn="true"
+        >
+            <arg value="--coverage_clover=${coverageClover}"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
     <target name="test:coverage" description="Run tests with coverage">
         <exec
                 executable="${bin}/phpunit"
@@ -104,10 +117,8 @@
                 passthru="true"
                 checkreturn="true"
         >
-            <arg value="--coverage-html=${temp}/coverage"/>
-            <arg value="--coverage-clover=${temp}/coverage.xml"/>
+            <arg value="--coverage-clover=${coverageClover}"/>
+            <arg value="--coverage-html=${coverage}/html"/>
         </exec>
     </target>
-
-
 </project>

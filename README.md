@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/wavevision/nette-tests/badge.svg?branch=master)](https://coveralls.io/github/wavevision/nette-tests?branch=master)
 [![PHPStan](https://img.shields.io/badge/style-level%20max-brightgreen.svg?label=phpstan)](https://github.com/phpstan/phpstan)
 
-[phpunit](https://github.com/sebastianbergmann/phpunit/) extension for testing nette applications
+[PHPUnit](https://github.com/sebastianbergmann/phpunit/) extension for testing Nette applications.
 
 ## Install
 

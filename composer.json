@@ -1,6 +1,6 @@
 {
   "name": "wavevision/nette-tests",
-  "description": "phpunit extension for testing nette applications",
+  "description": "PHPUnit extension for testing Nette applications.",
   "type": "library",
   "authors": [
     {
@@ -47,7 +47,8 @@
     "phing/phing": "^2.16",
     "jakub-onderka/php-parallel-lint": "^1.0",
     "phpstan/phpstan": "^0.11.16",
-    "phpstan/phpstan-phpunit": "^0.11.2"
+    "phpstan/phpstan-phpunit": "^0.11.2",
+    "php-coveralls/php-coveralls": "^2.1"
   },
   "scripts": {
     "phing": "phing"
