@@ -2,16 +2,23 @@
 
 namespace Wavevision\NetteTests\TestAppTests\Models;
 
-use Wavevision\NetteTests\TestApp\Models\ExampleModel;
+use Nette\DI\Container;
+use Wavevision\NetteTests\TestApp\Models\InjectExampleModel;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 
 class ExampleModelTest extends DIContainerTestCase
 {
 
+	use InjectExampleModel;
+
 	public function testGetDomain(): void
 	{
-		$exampleModel = $this->getContainer()->getByType(ExampleModel::class);
-		$this->assertSame('localhost', $exampleModel->getDomain());
+		$this->assertSame('localhost', $this->exampleModel->getDomain());
+	}
+
+	public function testGetContainer(): void
+	{
+		$this->assertInstanceOf(Container::class, $this->getContainer());
 	}
 
 }
