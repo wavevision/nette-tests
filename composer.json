@@ -1,5 +1,7 @@
 {
   "name": "wavevision/nette-tests",
+  "description": "phpunit extension for testing nette applications",
+  "type": "library",
   "authors": [
     {
       "name": "Wavevision s.r.o.",
@@ -8,6 +10,10 @@
     {
       "name": "Jakub Filla",
       "email": "jakub.filla@wavevision.cz"
+    },
+    {
+      "name": "Vít Rozsíval",
+      "email": "vit@wavevision.com"
     }
   ],
   "license": "MIT",
