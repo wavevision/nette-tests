@@ -2,10 +2,15 @@
   "name": "wavevision/nette-tests",
   "authors": [
     {
+      "name": "Wavevision s.r.o.",
+      "email": "info@wavevision.com"
+    },
+    {
       "name": "Jakub Filla",
       "email": "jakub.filla@wavevision.cz"
     }
   ],
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Wavevision\\NetteTests\\": "src/NetteTests/"
@@ -37,5 +42,8 @@
     "jakub-onderka/php-parallel-lint": "^1.0",
     "phpstan/phpstan": "^0.11.16",
     "phpstan/phpstan-phpunit": "^0.11.2"
+  },
+  "scripts": {
+    "phing": "phing"
   }
 }
