@@ -47,7 +47,7 @@ class FormPresenterTest extends PresenterTestCase
 				return;
 			}
 		}
-		$this->fail('Form error was expected');
+		$this->fail('Form error was expected.');
 	}
 
 }
