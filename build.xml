@@ -81,6 +81,7 @@
         >
             <arg value="analyze"/>
             <arg value="${src}"/>
+            <arg value="${tests}"/>
             <arg value="--level"/>
             <arg value="max"/>
         </exec>

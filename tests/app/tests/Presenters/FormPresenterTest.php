@@ -39,11 +39,15 @@ class FormPresenterTest extends PresenterTestCase
 				)
 			);
 		} catch (ExpectationFailedException $ex) {
-			$this->assertSame(
-				['c1' => ['c2' => ['name' => ['This field is required.']]]],
-				$ex->getComparisonFailure()->getActual()
-			);
+			if ($failure = $ex->getComparisonFailure()) {
+				$this->assertSame(
+					['c1' => ['c2' => ['name' => ['This field is required.']]]],
+					$failure->getActual()
+				);
+				return;
+			}
 		}
+		$this->fail('Form error was expected');
 	}
 
 }
