@@ -1,0 +1,35 @@
+{
+  "name": "wavevision/nette-tests",
+  "authors": [
+    {
+      "name": "Jakub Filla",
+      "email": "jakub.filla@wavevision.cz"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Wavevision\\NetteTests\\": "src/NetteTests/"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "nette/application": "^3.0",
+    "nette/bootstrap": "^3.0",
+    "nette/caching": "3.0",
+    "nette/di": "^3.0",
+    "nette/finder": "^2.5",
+    "nette/forms": "^3.0",
+    "nette/http": "^3.0",
+    "nette/utils": "^3.0",
+    "latte/latte": "^2.5",
+    "tracy/tracy": "^2.6",
+    "phpunit/phpunit": "^8.4"
+  },
+  "require-dev": {
+    "wavevision/coding-standard": "dev-master",
+    "phing/phing": "^2.16",
+    "jakub-onderka/php-parallel-lint": "^1.0",
+    "phpstan/phpstan": "^0.11.16",
+    "phpstan/phpstan-phpunit": "^0.11.2"
+  }
+}
