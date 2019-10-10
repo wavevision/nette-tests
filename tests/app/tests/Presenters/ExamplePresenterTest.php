@@ -2,6 +2,7 @@
 
 namespace Wavevision\NetteTests\TestAppTests\Presenters;
 
+use Wavevision\NetteTests\InvalidState;
 use Wavevision\NetteTests\Runners\PresenterRequest;
 use Wavevision\NetteTests\TestApp\Models\BrokenSignal;
 use Wavevision\NetteTests\TestApp\Presenters\ExamplePresenter;
@@ -33,6 +34,13 @@ class ExamplePresenterTest extends PresenterTestCase
 		$presenterRequest = (new PresenterRequest(ExamplePresenter::class))->setSignal('brokenSignal');
 		$this->expectException(BrokenSignal::class);
 		$this->setupAndRunPresenter($presenterRequest);
+	}
+
+	public function testNonExistingPresenter(): void
+	{
+		$this->expectException(InvalidState::class);
+		$this->expectExceptionMessage("Presenter not found for class 'NotPresenter'.");
+		$this->setupAndRunPresenter((new PresenterRequest('NotPresenter')));
 	}
 
 }

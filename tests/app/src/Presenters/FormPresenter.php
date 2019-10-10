@@ -15,4 +15,14 @@ class FormPresenter extends BasePresenter
 		return $form;
 	}
 
+	protected function createComponentNestedForm(): Form
+	{
+		$form = new Form();
+		$c1 = $form->addContainer('c1');
+		$c2 = $c1->addContainer('c2');
+		$c2->addText('name')
+			->setRequired();
+		return $form;
+	}
+
 }

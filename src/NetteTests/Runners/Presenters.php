@@ -31,7 +31,7 @@ class Presenters
 		$presenterClassName = $presenterRequest->getClassName();
 		$presenterName = $this->presenterFactory->unformatPresenterClass($presenterClassName);
 		if ($presenterName === null) {
-			throw new InvalidState(sprintf("Presenter name not found for class '%s'", $presenterClassName));
+			throw new InvalidState(sprintf("Presenter not found for class '%s'.", $presenterClassName));
 		}
 		$presenter = $this->createPresenter($presenterName);
 		$presenter->autoCanonicalize = false;
