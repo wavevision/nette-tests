@@ -9,3 +9,4 @@ session:
 
 services:
 	router: Wavevision\NetteTests\TestApp\Router\RouterFactory::createRouter
+	- Wavevision\NetteTests\TestApp\Models\ExampleModel
