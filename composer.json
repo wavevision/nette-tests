@@ -11,6 +11,12 @@
       "Wavevision\\NetteTests\\": "src/NetteTests/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Wavevision\\NetteTests\\TestApp\\": "tests/app/src/",
+      "Wavevision\\NetteTests\\TestAppTests\\": "tests/app/tests/"
+    }
+  },
   "require": {
     "php": ">=7.2",
     "nette/application": "^3.0",

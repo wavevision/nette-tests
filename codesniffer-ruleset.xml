@@ -5,6 +5,8 @@
         <properties>
             <property name="rootNamespaces" type="array">
                 <element key="src/NetteTests" value="Wavevision\NetteTests"/>
+                <element key="tests/app/src" value="Wavevision\NetteTests\TestApp"/>
+                <element key="tests/app/tests" value="Wavevision\NetteTests\TestAppTests"/>
             </property>
         </properties>
     </rule>

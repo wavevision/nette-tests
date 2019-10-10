@@ -1,0 +1,11 @@
+application:
+	mapping:
+		*:  Wavevision\NetteTests\TestApp\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+services:
+	router: Wavevision\NetteTests\TestApp\Router\RouterFactory::createRouter
