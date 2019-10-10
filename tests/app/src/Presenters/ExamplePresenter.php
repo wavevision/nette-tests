@@ -2,10 +2,10 @@
 
 namespace Wavevision\NetteTests\TestApp\Presenters;
 
-use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
+use Wavevision\NetteTests\TestApp\Models\BrokenSignal;
 
-class HomepagePresenter extends Presenter
+class ExamplePresenter extends Presenter
 {
 
 	public function actionJsonResponse(): void
@@ -21,14 +21,6 @@ class HomepagePresenter extends Presenter
 	public function handleBrokenSignal(): void
 	{
 		throw new BrokenSignal();
-	}
-
-	protected function createComponentForm(): Form
-	{
-		$form = new Form();
-		$form->addText('name');
-		$form->addSubmit('submit');
-		return $form;
 	}
 
 }
