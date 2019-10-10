@@ -68,7 +68,7 @@ class Presenters
 	{
 		$httpRequest = $presenterRequest->getPresenter()->getHttpRequest();
 		if ($httpRequest instanceof RequestMock) {
-			$httpRequest->setRawBodyMock($presenterRequest->getPost());
+			$httpRequest->setPostMock($presenterRequest->getPost());
 			$httpRequest->setMethodMock($presenterRequest->getMethod());
 			$httpRequest->setFilesMock($presenterRequest->getFiles());
 		} else {

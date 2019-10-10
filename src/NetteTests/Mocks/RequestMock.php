@@ -4,7 +4,7 @@ namespace Wavevision\NetteTests\Mocks;
 
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
-use Nette\Utils\Json;
+use Wavevision\NetteTests\InvalidState;
 
 class RequestMock extends Request
 {
@@ -12,7 +12,7 @@ class RequestMock extends Request
 	public const URL = 'http://localhost';
 
 	/**
-	 * @var string
+	 * @var string|null
 	 */
 	private $rawBodyMock;
 
@@ -36,6 +36,11 @@ class RequestMock extends Request
 	 */
 	private $isSameSiteMock;
 
+	/**
+	 * @var array<mixed>
+	 */
+	private $postMock;
+
 	public function __construct()
 	{
 		$urlScript = new UrlScript(self::URL);
@@ -45,7 +50,31 @@ class RequestMock extends Request
 
 	public function getRawBody(): string
 	{
+		if ($this->rawBodyMock === null) {
+			throw new InvalidState(sprintf('Raw body is not set. Use method %s::setRawBodyMock', self::class));
+		}
 		return $this->rawBodyMock;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPost(?string $key = null)
+	{
+		if ($key === null) {
+			return $this->postMock;
+		}
+		parent::getPost();
+		return $this->postMock[$key] ?? null;
+	}
+
+	/**
+	 * @param array<mixed> $postMock
+	 */
+	public function setPostMock(array $postMock): self
+	{
+		$this->postMock = $postMock;
+		return $this;
 	}
 
 	/**
@@ -81,12 +110,10 @@ class RequestMock extends Request
 		return parent::getHeader($header);
 	}
 
-	/**
-	 * @param array<mixed> $body
-	 */
-	public function setRawBodyMock(array $body): void
+	public function setRawBodyMock(string $body): self
 	{
-		$this->rawBodyMock = Json::encode($body);
+		$this->rawBodyMock = $body;
+		return $this;
 	}
 
 	/**

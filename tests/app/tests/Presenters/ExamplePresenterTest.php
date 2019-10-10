@@ -2,6 +2,7 @@
 
 namespace Wavevision\NetteTests\TestAppTests\Presenters;
 
+use Nette\Http\IRequest;
 use Wavevision\NetteTests\InvalidState;
 use Wavevision\NetteTests\Runners\PresenterRequest;
 use Wavevision\NetteTests\TestApp\Models\BrokenSignal;
@@ -19,8 +20,22 @@ class ExamplePresenterTest extends PresenterTestCase
 
 	public function testJsonResponse(): void
 	{
-		$payload = $this->assertJsonResponse(new PresenterRequest(ExamplePresenter::class, 'jsonResponse'));
-		$this->assertEquals(['42'], $payload);
+		$payload = $this->assertJsonResponse(
+			new PresenterRequest(
+				ExamplePresenter::class,
+				'jsonResponse',
+				['id' => 1],
+				IRequest::POST,
+				['42']
+			)
+		);
+		$this->assertEquals(
+			[
+				'id' => 1,
+				'post' => ['42'],
+			],
+			$payload
+		);
 	}
 
 	public function testRedirectResponse(): void

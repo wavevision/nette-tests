@@ -8,9 +8,9 @@ use Wavevision\NetteTests\TestApp\Models\BrokenSignal;
 class ExamplePresenter extends Presenter
 {
 
-	public function actionJsonResponse(): void
+	public function actionJsonResponse(int $id): void
 	{
-		$this->sendJson(['42']);
+		$this->sendJson(['id' => $id, 'post' => $this->getHttpRequest()->getPost()]);
 	}
 
 	public function actionRedirectResponse(): void
