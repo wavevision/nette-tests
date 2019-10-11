@@ -9,10 +9,11 @@
     <property name="temp" value="temp"/>
     <property name="tests" value="tests"/>
 
+    <target name="init" description="Initialize project" depends="composer"/>
     <target name="fix" description="Run lints and tests. Run before every pull request"
             depends="rm-cache, lint, cs, phpstan, test"/>
+    <target name="ci" depends="lint, phpcs, phpstan, test:coverage:report"/>
     <target name="cs" description="Check code style and fix it if possible" depends="phpcbf, phpcs"/>
-    <target name="init" description="Initialize project" depends="composer"/>
 
     <target name="rm-cache" description="Clear cache">
         <exec executable="rm -rf temp/cache"/>
@@ -98,7 +99,7 @@
         </exec>
     </target>
 
-    <target name="test:ci" description="Run tests and publish to Coveralls" depends="test:coverage">
+    <target name="test:coverage:report" description="Report coverage to Coveralls" depends="test:coverage:clover">
         <exec
                 executable="${bin}/php-coveralls"
                 logoutput="true"
@@ -110,7 +111,7 @@
         </exec>
     </target>
 
-    <target name="test:coverage" description="Run tests with coverage">
+    <target name="test:coverage:clover" description="Run tests and generate coverage as xml">
         <exec
                 executable="${bin}/phpunit"
                 logoutput="true"
@@ -118,7 +119,24 @@
                 checkreturn="true"
         >
             <arg value="--coverage-clover=${coverageClover}"/>
-            <arg value="--coverage-html=${coverage}/html"/>
         </exec>
     </target>
+
+    <target name="test:coverage" description="Run tests and generate coverage as html">
+        <exec
+                executable="${bin}/phpunit"
+                logoutput="true"
+                passthru="true"
+                checkreturn="true"
+        >
+            <arg value="--coverage-html=${coverage}"/>
+        </exec>
+    </target>
+
+    <target name="test:coverage:open" description="Open coverage in chrome" depends="test:coverage">
+        <exec executable="google-chrome">
+            <arg value="${coverage}/index.html"/>
+        </exec>
+    </target>
+
 </project>
