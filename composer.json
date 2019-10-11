@@ -43,7 +43,7 @@
     "phpunit/phpunit": "^8.4"
   },
   "require-dev": {
-    "wavevision/coding-standard": "dev-master",
+    "wavevision/coding-standard": "^1.1.0",
     "phing/phing": "^2.16",
     "jakub-onderka/php-parallel-lint": "^1.0",
     "phpstan/phpstan": "^0.11.16",

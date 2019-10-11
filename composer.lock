@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f9e84a6dc7aa949705523375ff76458",
+    "content-hash": "963cdf6cf7b3e53a41e33904ae92f4bb",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -4190,16 +4190,16 @@
         },
         {
             "name": "wavevision/coding-standard",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wavevision/coding-standard.git",
-                "reference": "48a3dedd87f846f25e2d5c7d41005b8f982e2de8"
+                "reference": "9dfebe4fa0053ed0e53e5938cafaa9be78dcde55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wavevision/coding-standard/zipball/48a3dedd87f846f25e2d5c7d41005b8f982e2de8",
-                "reference": "48a3dedd87f846f25e2d5c7d41005b8f982e2de8",
+                "url": "https://api.github.com/repos/wavevision/coding-standard/zipball/9dfebe4fa0053ed0e53e5938cafaa9be78dcde55",
+                "reference": "9dfebe4fa0053ed0e53e5938cafaa9be78dcde55",
                 "shasum": ""
             },
             "require": {
@@ -4244,14 +4244,12 @@
             ],
             "description": "The Wavevision PHP coding standard.",
             "homepage": "https://github.com/wavevision/coding-standard",
-            "time": "2019-10-10T15:33:10+00:00"
+            "time": "2019-10-11T12:31:48+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wavevision/coding-standard": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
