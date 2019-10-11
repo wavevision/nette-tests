@@ -134,7 +134,7 @@
     </target>
 
     <target name="test:coverage:open" description="Open coverage in chrome." depends="test:coverage">
-        <exec executable="chrome">
+        <exec executable="google-chrome">
             <arg value="${coverage}/index.html"/>
         </exec>
     </target>
