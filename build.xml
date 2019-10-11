@@ -12,7 +12,7 @@
     <target name="init" description="Initialize project" depends="composer"/>
     <target name="fix" description="Run lints and tests. Run before every pull request"
             depends="rm-cache, lint, cs, phpstan, test"/>
-    <target name="ci" depends="lint, phpcs, phpstan, test:report-coverage"/>
+    <target name="ci" depends="lint, phpcs, phpstan, test:coverage:report"/>
     <target name="cs" description="Check code style and fix it if possible" depends="phpcbf, phpcs"/>
 
     <target name="rm-cache" description="Clear cache">
@@ -99,7 +99,7 @@
         </exec>
     </target>
 
-    <target name="test:report-coverage" description="Report coverage to Coveralls" depends="test:coverage-clover">
+    <target name="test:coverage:report" description="Report coverage to Coveralls" depends="test:coverage:clover">
         <exec
                 executable="${bin}/php-coveralls"
                 logoutput="true"
@@ -111,7 +111,7 @@
         </exec>
     </target>
 
-    <target name="test:coverage-clover" description="Run tests and generate coverage as xml">
+    <target name="test:coverage:clover" description="Run tests and generate coverage as xml">
         <exec
                 executable="${bin}/phpunit"
                 logoutput="true"
@@ -122,8 +122,7 @@
         </exec>
     </target>
 
-
-    <target name="test:coverage-html" description="Run tests and generate coverage as html">
+    <target name="test:coverage" description="Run tests and generate coverage as html">
         <exec
                 executable="${bin}/phpunit"
                 logoutput="true"
@@ -133,4 +132,11 @@
             <arg value="--coverage-html=${coverage}"/>
         </exec>
     </target>
+
+    <target name="test:coverage:open" description="Open coverage in chrome." depends="test:coverage">
+        <exec executable="chrome">
+            <arg value="${coverage}/index.html"/>
+        </exec>
+    </target>
+
 </project>
