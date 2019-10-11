@@ -18,7 +18,6 @@ class ConfigureContainer
 	{
 		$configurator->addConfig(self::SERVICES_CONFIG);
 		$container = $configurator->createContainer();
-		/** @var AllowInjects $setupInjects */
 		$setupInjects = $container->getByType(AllowInjects::class);
 		$setupInjects->process($container, $testCase);
 		return $container;

@@ -48,9 +48,18 @@
     "jakub-onderka/php-parallel-lint": "^1.0",
     "phpstan/phpstan": "^0.11.16",
     "phpstan/phpstan-phpunit": "^0.11.2",
-    "php-coveralls/php-coveralls": "^2.1"
+    "php-coveralls/php-coveralls": "^2.1",
+    "phpstan/phpstan-nette": "^0.11.1",
+    "phpstan/extension-installer": "^1.0"
   },
   "scripts": {
     "phing": "phing"
+  },
+  "extra": {
+    "phpstan": {
+      "includes": [
+        "extension.neon"
+      ]
+    }
   }
 }
