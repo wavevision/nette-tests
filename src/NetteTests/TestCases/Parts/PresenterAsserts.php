@@ -5,6 +5,7 @@ namespace Wavevision\NetteTests\TestCases\Parts;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
+use Nette\Http\IResponse;
 use PHPUnit\Framework\Assert;
 use Wavevision\NetteTests\Runners\InjectPresenters;
 use Wavevision\NetteTests\Runners\PresenterRequest;
@@ -46,7 +47,7 @@ trait PresenterAsserts
 	}
 
 	/**
-	 * @return mixed
+	 * @return IResponse|mixed - todo fix phpstan early exit
 	 */
 	protected function runPresenterAndExpectResponseType(
 		string $expectedResponseType,
