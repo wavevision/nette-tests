@@ -2,10 +2,12 @@
 
 namespace Wavevision\NetteTests\TestCases\Parts;
 
-use Nette\Application\IResponse;
+use Nette\Application\Responses\FileResponse;
+use Nette\Application\Responses\ForwardResponse;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
+use Nette\Http\IResponse;
 use PHPUnit\Framework\Assert;
 use Wavevision\NetteTests\Runners\InjectPresenters;
 use Wavevision\NetteTests\Runners\PresenterRequest;
@@ -19,49 +21,52 @@ trait PresenterAsserts
 	/**
 	 * @return string - renderer text output
 	 */
-	protected function assertTextResponse(PresenterRequest $presenterRequest): string
+	protected function runPresenterAndExpectTextContent(PresenterRequest $presenterRequest): string
 	{
-		/** @var TextResponse $response */
-		$response = $this->assertResponseType(TextResponse::class, $presenterRequest);
-		return (string)$response->getSource();
+		return (string)$this->runPresenterAndExpectResponseType(TextResponse::class, $presenterRequest)
+			->getSource();
 	}
 
 	/**
 	 * @return array<mixed> - json payload
 	 */
-	protected function assertJsonResponse(PresenterRequest $presenterRequest): array
+	protected function runPresenterAndExpectJsonPayload(PresenterRequest $presenterRequest): array
 	{
-		/** @var JsonResponse $response */
-		$response = $this->assertResponseType(JsonResponse::class, $presenterRequest);
-		return $response->getPayload();
+		return $this->runPresenterAndExpectResponseType(JsonResponse::class, $presenterRequest)->getPayload();
 	}
 
 	/**
 	 * @return string - redirect url
 	 */
-	protected function assertRedirectResponse(PresenterRequest $presenterRequest): string
+	protected function runPresenterAndExpectRedirectUrl(PresenterRequest $presenterRequest): string
 	{
-		/** @var RedirectResponse $response */
-		$response = $this->assertResponseType(RedirectResponse::class, $presenterRequest);
-		return $response->getUrl();
+		return $this->runPresenterAndExpectResponseType(RedirectResponse::class, $presenterRequest)->getUrl();
 	}
 
-	protected function assertHasResponse(PresenterRequest $presenterRequest): IResponse
-	{
-		$presenterResponse = $this->setupAndRunPresenter($presenterRequest);
-		$response = $presenterResponse->getResponse();
-		Assert::assertNotNull($response);
-		return $response;
+	/**
+	 * @return IResponse|TextResponse|JsonResponse|RedirectResponse|FileResponse|ForwardResponse
+	 */
+	protected function runPresenterAndExpectResponseType(
+		string $expectedResponseType,
+		PresenterRequest $presenterRequest
+	) {
+		$presenterResponse = $this->runPresenter($presenterRequest);
+		$this->assertResponseType($expectedResponseType, $presenterResponse);
+		return $presenterResponse->getResponse();
 	}
 
-	protected function assertResponseType(string $responseType, PresenterRequest $presenterRequest): IResponse
+	protected function assertResponseExists(PresenterResponse $presenterResponse): void
 	{
-		$response = $this->assertHasResponse($presenterRequest);
-		Assert::assertInstanceOf($responseType, $response);
-		return $response;
+		Assert::assertNotNull($presenterResponse->getResponse(), 'Some response is expected.');
 	}
 
-	protected function setupAndRunPresenter(PresenterRequest $presenterRequest): PresenterResponse
+	protected function assertResponseType(string $expectedResponseType, PresenterResponse $presenterResponse): void
+	{
+		$this->assertResponseExists($presenterResponse);
+		Assert::assertInstanceOf($expectedResponseType, $presenterResponse->getResponse(), 'Invalid response type.');
+	}
+
+	protected function runPresenter(PresenterRequest $presenterRequest): PresenterResponse
 	{
 		$this->presenters->setup($presenterRequest);
 		return $this->presenters->run($presenterRequest);

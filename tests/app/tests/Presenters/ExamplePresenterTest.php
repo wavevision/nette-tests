@@ -14,13 +14,13 @@ class ExamplePresenterTest extends PresenterTestCase
 
 	public function testTextResponse(): void
 	{
-		$text = $this->assertTextResponse(new PresenterRequest(ExamplePresenter::class, 'textResponse'));
+		$text = $this->runPresenterAndExpectTextContent(new PresenterRequest(ExamplePresenter::class, 'textResponse'));
 		$this->assertEquals('Hello there!', $text);
 	}
 
 	public function testJsonResponse(): void
 	{
-		$payload = $this->assertJsonResponse(
+		$payload = $this->runPresenterAndExpectJsonPayload(
 			new PresenterRequest(
 				ExamplePresenter::class,
 				'jsonResponse',
@@ -40,7 +40,9 @@ class ExamplePresenterTest extends PresenterTestCase
 
 	public function testRedirectResponse(): void
 	{
-		$url = $this->assertRedirectResponse(new PresenterRequest(ExamplePresenter::class, 'redirectResponse'));
+		$url = $this->runPresenterAndExpectRedirectUrl(
+			new PresenterRequest(ExamplePresenter::class, 'redirectResponse')
+		);
 		$this->assertEquals('https://9gag.com', $url);
 	}
 
@@ -48,14 +50,28 @@ class ExamplePresenterTest extends PresenterTestCase
 	{
 		$presenterRequest = (new PresenterRequest(ExamplePresenter::class))->setSignal('brokenSignal');
 		$this->expectException(BrokenSignal::class);
-		$this->setupAndRunPresenter($presenterRequest);
+		$this->runPresenter($presenterRequest);
 	}
 
 	public function testNonExistingPresenter(): void
 	{
 		$this->expectException(InvalidState::class);
 		$this->expectExceptionMessage("Presenter not found for class 'NotPresenter'.");
-		$this->setupAndRunPresenter((new PresenterRequest('NotPresenter')));
+		$this->runPresenter((new PresenterRequest('NotPresenter')));
+	}
+
+	public function testBeforeRunCallback(): void
+	{
+		$called = false;
+		$presenterRequest = (new PresenterRequest(ExamplePresenter::class))->addBeforeRunCallback(
+			function (PresenterRequest $presenterRequest) use (&$called): void {
+				$called = true;
+				$this->assertInstanceOf(ExamplePresenter::class, $presenterRequest->getPresenter());
+				$this->assertEquals('Example', $presenterRequest->getPresenterName());
+			}
+		);
+		$this->runPresenter($presenterRequest);
+		$this->assertTrue($called);
 	}
 
 }

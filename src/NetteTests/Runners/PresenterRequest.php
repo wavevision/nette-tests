@@ -56,6 +56,11 @@ class PresenterRequest
 	private $presenterName;
 
 	/**
+	 * @var callable[]
+	 */
+	private $beforeRunCallbacks = [];
+
+	/**
 	 * @param array<mixed> $query
 	 * @param array<mixed> $post
 	 * @param array<mixed> $files
@@ -207,6 +212,20 @@ class PresenterRequest
 	{
 		$this->query[self::SIGNAL_QUERY_PARAMETER] = $signalName;
 		return $this;
+	}
+
+	public function addBeforeRunCallback(callable $beforeRunCallback): self
+	{
+		$this->beforeRunCallbacks[] = $beforeRunCallback;
+		return $this;
+	}
+
+	/**
+	 * @return array<callable>
+	 */
+	public function getBeforeRunCallbacks(): array
+	{
+		return $this->beforeRunCallbacks;
 	}
 
 }

@@ -43,6 +43,9 @@ class Presenters
 
 	public function run(PresenterRequest $presenterRequest): PresenterResponse
 	{
+		foreach ($presenterRequest->getBeforeRunCallbacks() as $beforeRunCallback) {
+			$beforeRunCallback($presenterRequest);
+		}
 		$presenter = $presenterRequest->getPresenter();
 		$response = $presenter->run(
 			new Request(
@@ -75,4 +78,5 @@ class Presenters
 			throw new InvalidState('HttpRequest should be mocked.');
 		}
 	}
+
 }
