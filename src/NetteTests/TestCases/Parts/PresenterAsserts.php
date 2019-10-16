@@ -2,7 +2,6 @@
 
 namespace Wavevision\NetteTests\TestCases\Parts;
 
-use Nette\Application\IResponse;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
@@ -46,10 +45,13 @@ trait PresenterAsserts
 		return $redirectResponse->getUrl();
 	}
 
+	/**
+	 * @return mixed
+	 */
 	protected function runPresenterAndExpectResponseType(
 		string $expectedResponseType,
 		PresenterRequest $presenterRequest
-	): IResponse {
+	) {
 		$presenterResponse = $this->runPresenter($presenterRequest);
 		$this->assertResponseType($expectedResponseType, $presenterResponse);
 		return $presenterResponse->getResponse();
