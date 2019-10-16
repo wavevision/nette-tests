@@ -14,13 +14,13 @@ class ExamplePresenterTest extends PresenterTestCase
 
 	public function testTextResponse(): void
 	{
-		$text = $this->runPresenterAndExpectTextContent(new PresenterRequest(ExamplePresenter::class, 'textResponse'));
+		$text = $this->runPresenterAndReturnTextPayload(new PresenterRequest(ExamplePresenter::class, 'textResponse'));
 		$this->assertEquals('Hello there!', $text);
 	}
 
 	public function testJsonResponse(): void
 	{
-		$payload = $this->runPresenterAndExpectJsonPayload(
+		$payload = $this->runPresenterAndReturnJsonPayload(
 			new PresenterRequest(
 				ExamplePresenter::class,
 				'jsonResponse',
@@ -40,7 +40,7 @@ class ExamplePresenterTest extends PresenterTestCase
 
 	public function testRedirectResponse(): void
 	{
-		$url = $this->runPresenterAndExpectRedirectUrl(
+		$url = $this->runPresenterAndReturnRedirectUrl(
 			new PresenterRequest(ExamplePresenter::class, 'redirectResponse')
 		);
 		$this->assertEquals('https://9gag.com', $url);

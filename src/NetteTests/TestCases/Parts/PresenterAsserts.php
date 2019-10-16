@@ -19,37 +19,37 @@ trait PresenterAsserts
 	/**
 	 * @return string - renderer text output
 	 */
-	protected function runPresenterAndExpectTextContent(PresenterRequest $presenterRequest): string
+	protected function runPresenterAndReturnTextPayload(PresenterRequest $presenterRequest): string
 	{
 		/** @var TextResponse $textResponse */
-		$textResponse = $this->runPresenterAndExpectResponseType(TextResponse::class, $presenterRequest);
+		$textResponse = $this->runPresenterAndReturnResponse(TextResponse::class, $presenterRequest);
 		return (string)$textResponse->getSource();
 	}
 
 	/**
 	 * @return array<mixed> - json payload
 	 */
-	protected function runPresenterAndExpectJsonPayload(PresenterRequest $presenterRequest): array
+	protected function runPresenterAndReturnJsonPayload(PresenterRequest $presenterRequest): array
 	{
 		/** @var JsonResponse $jsonResponse */
-		$jsonResponse = $this->runPresenterAndExpectResponseType(JsonResponse::class, $presenterRequest);
+		$jsonResponse = $this->runPresenterAndReturnResponse(JsonResponse::class, $presenterRequest);
 		return $jsonResponse->getPayload();
 	}
 
 	/**
 	 * @return string - redirect url
 	 */
-	protected function runPresenterAndExpectRedirectUrl(PresenterRequest $presenterRequest): string
+	protected function runPresenterAndReturnRedirectUrl(PresenterRequest $presenterRequest): string
 	{
 		/** @var RedirectResponse $redirectResponse */
-		$redirectResponse = $this->runPresenterAndExpectResponseType(RedirectResponse::class, $presenterRequest);
+		$redirectResponse = $this->runPresenterAndReturnResponse(RedirectResponse::class, $presenterRequest);
 		return $redirectResponse->getUrl();
 	}
 
 	/**
 	 * @return IResponse|mixed - todo fix phpstan early exit
 	 */
-	protected function runPresenterAndExpectResponseType(
+	protected function runPresenterAndReturnResponse(
 		string $expectedResponseType,
 		PresenterRequest $presenterRequest
 	) {
