@@ -2,12 +2,10 @@
 
 namespace Wavevision\NetteTests\TestCases\Parts;
 
-use Nette\Application\Responses\FileResponse;
-use Nette\Application\Responses\ForwardResponse;
+use Nette\Application\IResponse;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
-use Nette\Http\IResponse;
 use PHPUnit\Framework\Assert;
 use Wavevision\NetteTests\Runners\InjectPresenters;
 use Wavevision\NetteTests\Runners\PresenterRequest;
@@ -23,8 +21,9 @@ trait PresenterAsserts
 	 */
 	protected function runPresenterAndExpectTextContent(PresenterRequest $presenterRequest): string
 	{
-		return (string)$this->runPresenterAndExpectResponseType(TextResponse::class, $presenterRequest)
-			->getSource();
+		/** @var TextResponse $textResponse */
+		$textResponse = $this->runPresenterAndExpectResponseType(TextResponse::class, $presenterRequest);
+		return (string)$textResponse->getSource();
 	}
 
 	/**
@@ -32,7 +31,9 @@ trait PresenterAsserts
 	 */
 	protected function runPresenterAndExpectJsonPayload(PresenterRequest $presenterRequest): array
 	{
-		return $this->runPresenterAndExpectResponseType(JsonResponse::class, $presenterRequest)->getPayload();
+		/** @var JsonResponse $jsonResponse */
+		$jsonResponse = $this->runPresenterAndExpectResponseType(JsonResponse::class, $presenterRequest);
+		return $jsonResponse->getPayload();
 	}
 
 	/**
@@ -40,16 +41,15 @@ trait PresenterAsserts
 	 */
 	protected function runPresenterAndExpectRedirectUrl(PresenterRequest $presenterRequest): string
 	{
-		return $this->runPresenterAndExpectResponseType(RedirectResponse::class, $presenterRequest)->getUrl();
+		/** @var RedirectResponse $redirectResponse */
+		$redirectResponse = $this->runPresenterAndExpectResponseType(RedirectResponse::class, $presenterRequest);
+		return $redirectResponse->getUrl();
 	}
 
-	/**
-	 * @return IResponse|TextResponse|JsonResponse|RedirectResponse|FileResponse|ForwardResponse
-	 */
 	protected function runPresenterAndExpectResponseType(
 		string $expectedResponseType,
 		PresenterRequest $presenterRequest
-	) {
+	): IResponse {
 		$presenterResponse = $this->runPresenter($presenterRequest);
 		$this->assertResponseType($expectedResponseType, $presenterResponse);
 		return $presenterResponse->getResponse();
