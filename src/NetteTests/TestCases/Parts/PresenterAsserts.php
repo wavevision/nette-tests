@@ -2,6 +2,9 @@
 
 namespace Wavevision\NetteTests\TestCases\Parts;
 
+use Nette\Application\Request;
+use Nette\Application\Responses\FileResponse;
+use Nette\Application\Responses\ForwardResponse;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
@@ -42,6 +45,25 @@ trait PresenterAsserts
 		$this->failWithInvalidResponseType(RedirectResponse::class);
 	}
 
+	protected function extractFileResponse(PresenterResponse $presenterResponse): FileResponse
+	{
+		$response = $presenterResponse->getResponse();
+		if ($response instanceof FileResponse) {
+			return $response;
+		}
+		$this->failWithInvalidResponseType(FileResponse::class);
+	}
+
+	protected function extractForwardResponse(PresenterResponse $presenterResponse): ForwardResponse
+	{
+		$response = $presenterResponse->getResponse();
+		if ($response instanceof ForwardResponse) {
+			$response->getRequest();
+			return $response;
+		}
+		$this->failWithInvalidResponseType(ForwardResponse::class);
+	}
+
 	protected function extractTextResponseContent(PresenterResponse $presenterResponse): string
 	{
 		return (string)$this->extractTextResponse($presenterResponse)->getSource();
@@ -58,6 +80,16 @@ trait PresenterAsserts
 	protected function extractRedirectResponseUrl(PresenterResponse $presenterResponse): string
 	{
 		return $this->extractRedirectResponse($presenterResponse)->getUrl();
+	}
+
+	protected function extractFileResponseFile(PresenterResponse $presenterResponse): string
+	{
+		return $this->extractFileResponse($presenterResponse)->getFile();
+	}
+
+	protected function extractForwardResponseRequest(PresenterResponse $presenterResponse): Request
+	{
+		return $this->extractForwardResponse($presenterResponse)->getRequest();
 	}
 
 	protected function runPresenter(PresenterRequest $presenterRequest): PresenterResponse

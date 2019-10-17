@@ -55,6 +55,24 @@ class ExamplePresenterTest extends PresenterTestCase
 		);
 	}
 
+	public function testFileResponse(): void
+	{
+		$this->assertStringContainsString(
+			'Presenters/file.txt',
+			$this->extractFileResponseFile(
+				$this->runPresenter(new PresenterRequest(ExamplePresenter::class, 'fileResponse'))
+			)
+		);
+	}
+
+	public function testForwardResponse(): void
+	{
+		$request = $this->extractForwardResponseRequest(
+			$this->runPresenter(new PresenterRequest(ExamplePresenter::class, 'forwardResponse'))
+		);
+		$this->assertEquals('Example', $request->getPresenterName());
+	}
+
 	public function testSignal(): void
 	{
 		$presenterRequest = (new PresenterRequest(ExamplePresenter::class))->setSignal('brokenSignal');
@@ -106,9 +124,27 @@ class ExamplePresenterTest extends PresenterTestCase
 		$this->extractRedirectResponse($presenterResponse);
 	}
 
+	public function testNotFileResponse(): void
+	{
+		$presenterResponse = $this->getTerminatePresenterResponse();
+		$this->expectExceptionMessage(
+			"Invalid response type 'Nette\Application\Responses\FileResponse' was expected."
+		);
+		$this->extractFileResponse($presenterResponse);
+	}
+
+	public function testNotForwardResponse(): void
+	{
+		$presenterResponse = $this->getTerminatePresenterResponse();
+		$this->expectExceptionMessage(
+			"Invalid response type 'Nette\Application\Responses\ForwardResponse' was expected."
+		);
+		$this->extractForwardResponse($presenterResponse);
+	}
+
 	private function getTerminatePresenterResponse(): PresenterResponse
 	{
-		$presenterRequest = new PresenterRequest(ExamplePresenter::class, 'terminate');
+		$presenterRequest = new PresenterRequest(ExamplePresenter::class, 'terminateResponse');
 		$presenterResponse = $this->runPresenter($presenterRequest);
 		$this->expectException(AssertionFailedError::class);
 		return $presenterResponse;
