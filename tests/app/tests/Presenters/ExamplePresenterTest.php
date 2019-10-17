@@ -16,7 +16,7 @@ class ExamplePresenterTest extends PresenterTestCase
 
 	public function testTextResponse(): void
 	{
-		$this->assertEquals(
+		$this->assertStringContainsString(
 			'Hello there!',
 			$this->extractTextResponseContent(
 				$this->runPresenter(new PresenterRequest(ExamplePresenter::class, 'textResponse'))
