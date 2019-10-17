@@ -16,11 +16,11 @@ class PresenterResponse
 	private $presenterRequest;
 
 	/**
-	 * @var IResponse|null
+	 * @var IResponse
 	 */
 	private $response;
 
-	public function __construct(PresenterRequest $presenterRequest, ?IResponse $response)
+	public function __construct(PresenterRequest $presenterRequest, IResponse $response)
 	{
 		$this->presenterRequest = $presenterRequest;
 		$this->response = $response;
@@ -31,8 +31,9 @@ class PresenterResponse
 		return $this->presenterRequest;
 	}
 
-	public function getResponse(): ?IResponse
+	public function getResponse(): IResponse
 	{
 		return $this->response;
 	}
+
 }

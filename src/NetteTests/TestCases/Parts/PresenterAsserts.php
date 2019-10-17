@@ -5,7 +5,6 @@ namespace Wavevision\NetteTests\TestCases\Parts;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
-use Nette\Http\IResponse;
 use PHPUnit\Framework\Assert;
 use Wavevision\NetteTests\Runners\InjectPresenters;
 use Wavevision\NetteTests\Runners\PresenterRequest;
@@ -16,63 +15,60 @@ trait PresenterAsserts
 
 	use InjectPresenters;
 
-	/**
-	 * @return string - renderer text output
-	 */
-	protected function runPresenterAndReturnTextPayload(PresenterRequest $presenterRequest): string
+	protected function extractTextResponse(PresenterResponse $presenterResponse): TextResponse
 	{
-		/** @var TextResponse $textResponse */
-		$textResponse = $this->runPresenterAndReturnResponse(TextResponse::class, $presenterRequest);
-		return (string)$textResponse->getSource();
+		$response = $presenterResponse->getResponse();
+		if ($response instanceof TextResponse) {
+			return $response;
+		}
+		$this->failWithInvalidResponseType(TextResponse::class);
+	}
+
+	protected function extractJsonResponse(PresenterResponse $presenterResponse): JsonResponse
+	{
+		$response = $presenterResponse->getResponse();
+		if ($response instanceof JsonResponse) {
+			return $response;
+		}
+		$this->failWithInvalidResponseType(JsonResponse::class);
+	}
+
+	protected function extractRedirectResponse(PresenterResponse $presenterResponse): RedirectResponse
+	{
+		$response = $presenterResponse->getResponse();
+		if ($response instanceof RedirectResponse) {
+			return $response;
+		}
+		$this->failWithInvalidResponseType(RedirectResponse::class);
+	}
+
+	protected function extractTextResponseContent(PresenterResponse $presenterResponse): string
+	{
+		return (string)$this->extractTextResponse($presenterResponse)->getSource();
 	}
 
 	/**
-	 * @return array<mixed> - json payload
+	 * @return mixed
 	 */
-	protected function runPresenterAndReturnJsonPayload(PresenterRequest $presenterRequest): array
+	protected function extractJsonResponsePayload(PresenterResponse $presenterResponse)
 	{
-		/** @var JsonResponse $jsonResponse */
-		$jsonResponse = $this->runPresenterAndReturnResponse(JsonResponse::class, $presenterRequest);
-		return $jsonResponse->getPayload();
+		return $this->extractJsonResponse($presenterResponse)->getPayload();
 	}
 
-	/**
-	 * @return string - redirect url
-	 */
-	protected function runPresenterAndReturnRedirectUrl(PresenterRequest $presenterRequest): string
+	protected function extractRedirectResponseUrl(PresenterResponse $presenterResponse): string
 	{
-		/** @var RedirectResponse $redirectResponse */
-		$redirectResponse = $this->runPresenterAndReturnResponse(RedirectResponse::class, $presenterRequest);
-		return $redirectResponse->getUrl();
-	}
-
-	/**
-	 * @return IResponse|mixed - todo fix phpstan early exit
-	 */
-	protected function runPresenterAndReturnResponse(
-		string $expectedResponseType,
-		PresenterRequest $presenterRequest
-	) {
-		$presenterResponse = $this->runPresenter($presenterRequest);
-		$this->assertResponseType($expectedResponseType, $presenterResponse);
-		return $presenterResponse->getResponse();
-	}
-
-	protected function assertResponseExists(PresenterResponse $presenterResponse): void
-	{
-		Assert::assertNotNull($presenterResponse->getResponse(), 'Some response is expected.');
-	}
-
-	protected function assertResponseType(string $expectedResponseType, PresenterResponse $presenterResponse): void
-	{
-		$this->assertResponseExists($presenterResponse);
-		Assert::assertInstanceOf($expectedResponseType, $presenterResponse->getResponse(), 'Invalid response type.');
+		return $this->extractRedirectResponse($presenterResponse)->getUrl();
 	}
 
 	protected function runPresenter(PresenterRequest $presenterRequest): PresenterResponse
 	{
 		$this->presenters->setup($presenterRequest);
 		return $this->presenters->run($presenterRequest);
+	}
+
+	private function failWithInvalidResponseType(string $expected): void
+	{
+		Assert::fail(sprintf("Invalid response type '%s' was expected.", $expected));
 	}
 
 }

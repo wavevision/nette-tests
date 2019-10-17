@@ -23,4 +23,9 @@ class ExamplePresenter extends Presenter
 		throw new BrokenSignal();
 	}
 
+	public function actionTerminate(): void
+	{
+		$this->terminate();
+	}
+
 }

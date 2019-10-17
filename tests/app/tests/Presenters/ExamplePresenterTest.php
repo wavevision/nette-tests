@@ -3,8 +3,10 @@
 namespace Wavevision\NetteTests\TestAppTests\Presenters;
 
 use Nette\Http\IRequest;
+use PHPUnit\Framework\AssertionFailedError;
 use Wavevision\NetteTests\InvalidState;
 use Wavevision\NetteTests\Runners\PresenterRequest;
+use Wavevision\NetteTests\Runners\PresenterResponse;
 use Wavevision\NetteTests\TestApp\Models\BrokenSignal;
 use Wavevision\NetteTests\TestApp\Presenters\ExamplePresenter;
 use Wavevision\NetteTests\TestCases\PresenterTestCase;
@@ -14,36 +16,43 @@ class ExamplePresenterTest extends PresenterTestCase
 
 	public function testTextResponse(): void
 	{
-		$text = $this->runPresenterAndReturnTextPayload(new PresenterRequest(ExamplePresenter::class, 'textResponse'));
-		$this->assertEquals('Hello there!', $text);
+		$this->assertEquals(
+			'Hello there!',
+			$this->extractTextResponseContent(
+				$this->runPresenter(new PresenterRequest(ExamplePresenter::class, 'textResponse'))
+			)
+		);
 	}
 
 	public function testJsonResponse(): void
 	{
-		$payload = $this->runPresenterAndReturnJsonPayload(
-			new PresenterRequest(
-				ExamplePresenter::class,
-				'jsonResponse',
-				['id' => 1],
-				IRequest::POST,
-				['42']
-			)
-		);
 		$this->assertEquals(
 			[
 				'id' => 1,
 				'post' => ['42'],
 			],
-			$payload
+			$this->extractJsonResponsePayload(
+				$this->runPresenter(
+					new PresenterRequest(
+						ExamplePresenter::class,
+						'jsonResponse',
+						['id' => 1],
+						IRequest::POST,
+						['42']
+					)
+				)
+			)
 		);
 	}
 
 	public function testRedirectResponse(): void
 	{
-		$url = $this->runPresenterAndReturnRedirectUrl(
-			new PresenterRequest(ExamplePresenter::class, 'redirectResponse')
+		$this->assertEquals(
+			'https://9gag.com',
+			$this->extractRedirectResponseUrl(
+				$this->runPresenter(new PresenterRequest(ExamplePresenter::class, 'redirectResponse'))
+			)
 		);
-		$this->assertEquals('https://9gag.com', $url);
 	}
 
 	public function testSignal(): void
@@ -72,6 +81,37 @@ class ExamplePresenterTest extends PresenterTestCase
 		);
 		$this->runPresenter($presenterRequest);
 		$this->assertTrue($called);
+	}
+
+	public function testNotTextResponse(): void
+	{
+		$presenterResponse = $this->getTerminatePresenterResponse();
+		$this->expectExceptionMessage("Invalid response type 'Nette\Application\Responses\TextResponse' was expected.");
+		$this->extractTextResponse($presenterResponse);
+	}
+
+	public function testNotJsonResponse(): void
+	{
+		$presenterResponse = $this->getTerminatePresenterResponse();
+		$this->expectExceptionMessage("Invalid response type 'Nette\Application\Responses\JsonResponse' was expected.");
+		$this->extractJsonResponse($presenterResponse);
+	}
+
+	public function testNotRedirectResponse(): void
+	{
+		$presenterResponse = $this->getTerminatePresenterResponse();
+		$this->expectExceptionMessage(
+			"Invalid response type 'Nette\Application\Responses\RedirectResponse' was expected."
+		);
+		$this->extractRedirectResponse($presenterResponse);
+	}
+
+	private function getTerminatePresenterResponse(): PresenterResponse
+	{
+		$presenterRequest = new PresenterRequest(ExamplePresenter::class, 'terminate');
+		$presenterResponse = $this->runPresenter($presenterRequest);
+		$this->expectException(AssertionFailedError::class);
+		return $presenterResponse;
 	}
 
 }
