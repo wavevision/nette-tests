@@ -35,13 +35,22 @@ class Forms
 	/**
 	 * @return array<mixed>
 	 */
-	public function formatFormErrors(Container $container): array
+	public function formatFormErrors(Form $form): array
+	{
+		//todo custom errors
+		return $this->formatContainerErrors($form);
+	}
+
+	/**
+	 * @return array<mixed>
+	 */
+	private function formatContainerErrors(Container $container): array
 	{
 		$values = [];
 		foreach ($container->getComponents() as $component) {
 			$name = $component->getName();
 			if ($component instanceof Container) {
-				$items = $this->formatFormErrors($component);
+				$items = $this->formatContainerErrors($component);
 				if (count($items) > 0) {
 					$values[$name] = $items;
 				}

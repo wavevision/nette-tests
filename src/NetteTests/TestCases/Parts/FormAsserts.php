@@ -12,20 +12,31 @@ trait FormAsserts
 
 	use InjectForms;
 
-	protected function assertValidForm(SubmitFormRequest $submitFormRequest): void
+	protected function assertValidForm(SubmitFormResponse $submitFormResponse): void
 	{
-		$submitFormResponse = $this->setupAndSubmitForm($submitFormRequest);
 		$form = $submitFormResponse->getForm();
-		if (!$form->isValid()) {
-			$errors = $this->forms->formatFormErrors($form);
-			Assert::assertSame([], $errors);
-		}
-		Assert::assertTrue($form->isValid());
+		$errors = $this->extractFormErrors($submitFormResponse);
+		Assert::assertSame(
+			[],
+			$errors,
+			sprintf("Form '%s' should not contain errors, %s error found.", $form->getName(), count($errors))
+		);
+		//todo get global errors
+		Assert::assertTrue($form->isValid(), sprintf("Form '%s' is not valid.", $form->getName()));
 	}
 
-	protected function setupAndSubmitForm(SubmitFormRequest $submitFormRequest): SubmitFormResponse
+	/**
+	 * @return array<mixed>
+	 */
+	protected function extractFormErrors(SubmitFormResponse $submitFormResponse): array
+	{
+		return $this->forms->formatFormErrors($submitFormResponse->getForm());
+	}
+
+	protected function submitForm(SubmitFormRequest $submitFormRequest): SubmitFormResponse
 	{
 		$this->forms->setup($submitFormRequest);
 		return $this->forms->submit($submitFormRequest);
 	}
+
 }
