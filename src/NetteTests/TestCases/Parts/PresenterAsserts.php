@@ -13,9 +13,6 @@ use Wavevision\NetteTests\Runners\InjectPresenters;
 use Wavevision\NetteTests\Runners\PresenterRequest;
 use Wavevision\NetteTests\Runners\PresenterResponse;
 
-/**
- * @todo flash messages
- */
 trait PresenterAsserts
 {
 

@@ -2,6 +2,9 @@
 
 namespace Wavevision\NetteTests;
 
+use Nette\Configurator;
+use PHPUnit\Framework\TestCase;
+
 class Configuration
 {
 
@@ -10,19 +13,34 @@ class Configuration
 	 */
 	private static $configuratorFactory;
 
-	public static function setConfiguratorFactory(callable $configuratorFactory): void
+	public static function setup(callable $configuratorFactory): void
 	{
+		ob_start();
 		self::$configuratorFactory = $configuratorFactory;
 	}
 
-	public static function getConfiguratorFactory(): callable
+	public static function createConfigurator(TestCase $testCase): Configurator
 	{
-		return self::$configuratorFactory;
-	}
-
-	public static function setup(): void
-	{
-		ob_start();
+		$configuratorFactory = self::$configuratorFactory;
+		if (!is_callable($configuratorFactory)) {
+			throw new InvalidState(
+				sprintf(
+					"Setup method not called. Call '%s::setup()' method in bootstrap file.",
+					self::class
+				)
+			);
+		}
+		$configurator = $configuratorFactory($testCase);
+		if ($configurator instanceof Configurator) {
+			return $configurator;
+		} else {
+			throw new InvalidState(
+				sprintf(
+					'\'%1$s::getConfigurationFactory()\' should return instance of \'%1$s\'.',
+					Configuration::class
+				)
+			);
+		}
 	}
 
 }
