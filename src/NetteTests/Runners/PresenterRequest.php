@@ -61,6 +61,11 @@ class PresenterRequest
 	private $beforeRunCallbacks = [];
 
 	/**
+	 * @var bool|null
+	 */
+	private $ajax;
+
+	/**
 	 * @param array<mixed> $query
 	 * @param array<mixed> $post
 	 * @param array<mixed> $files
@@ -226,6 +231,17 @@ class PresenterRequest
 	public function getBeforeRunCallbacks(): array
 	{
 		return $this->beforeRunCallbacks;
+	}
+
+	public function getAjax(): ?bool
+	{
+		return $this->ajax;
+	}
+
+	public function setAjax(bool $ajax): self
+	{
+		$this->ajax = $ajax;
+		return $this;
 	}
 
 }

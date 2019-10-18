@@ -9,6 +9,15 @@ use Wavevision\NetteTests\TestApp\Models\BrokenSignal;
 class ExamplePresenter extends Presenter
 {
 
+	public function actionAjax(): void
+	{
+		if ($this->isAjax()) {
+			$this->sendJson(true);
+		} else {
+			$this->terminate();
+		}
+	}
+
 	public function actionJsonResponse(int $id): void
 	{
 		$this->sendJson(['id' => $id, 'post' => $this->getHttpRequest()->getPost()]);

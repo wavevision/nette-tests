@@ -2,6 +2,7 @@
 
 namespace Wavevision\NetteTests\TestAppTests\Presenters;
 
+use Nette\Application\Responses\VoidResponse;
 use Nette\Http\IRequest;
 use PHPUnit\Framework\AssertionFailedError;
 use Wavevision\NetteTests\InvalidState;
@@ -13,6 +14,19 @@ use Wavevision\NetteTests\TestCases\PresenterTestCase;
 
 class ExamplePresenterTest extends PresenterTestCase
 {
+
+	public function testAjaxRequest(): void
+	{
+		$this->assertInstanceOf(
+			VoidResponse::class,
+			$this->runPresenter(new PresenterRequest(ExamplePresenter::class, 'ajax'))->getResponse()
+		);
+		$this->assertTrue(
+			$this->extractJsonResponsePayload(
+				$this->runPresenter((new PresenterRequest(ExamplePresenter::class, 'ajax'))->setAjax(true))
+			)
+		);
+	}
 
 	public function testTextResponse(): void
 	{

@@ -12,6 +12,11 @@ class RequestMock extends Request
 	public const URL = 'http://localhost';
 
 	/**
+	 * @var bool|null
+	 */
+	private $ajaxMock;
+
+	/**
 	 * @var string|null
 	 */
 	private $rawBodyMock;
@@ -46,6 +51,20 @@ class RequestMock extends Request
 		$urlScript = new UrlScript(self::URL);
 		$this->isSameSiteMock = true;
 		parent::__construct($urlScript);
+	}
+
+	public function isAjax(): bool
+	{
+		if ($this->ajaxMock === null) {
+			return parent::isAjax();
+		}
+		return $this->ajaxMock;
+	}
+
+	public function setAjaxMock(?bool $ajaxMock): self
+	{
+		$this->ajaxMock = $ajaxMock;
+		return $this;
 	}
 
 	public function getRawBody(): string
