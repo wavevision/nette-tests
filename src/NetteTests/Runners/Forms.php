@@ -37,7 +37,6 @@ class Forms
 	 */
 	public function formatFormErrors(Form $form): array
 	{
-		//todo custom errors
 		return $this->formatContainerErrors($form);
 	}
 
