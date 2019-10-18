@@ -25,4 +25,11 @@ class FormPresenter extends BasePresenter
 		return $form;
 	}
 
+	protected function createComponentFormError(): Form
+	{
+		$form = new Form();
+		$form->addError('customError');
+		return $form;
+	}
+
 }

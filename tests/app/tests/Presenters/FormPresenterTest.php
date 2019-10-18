@@ -12,6 +12,7 @@ class FormPresenterTest extends PresenterTestCase
 
 	public function testSubmitForm(): void
 	{
+		$this->assertEquals([], []);
 		$this->assertValidForm(
 			$this->submitForm(
 				new SubmitFormRequest(
@@ -27,47 +28,55 @@ class FormPresenterTest extends PresenterTestCase
 		);
 	}
 
-	public function testSubmitWithErrors(): void
+	public function testFormInputErrors(): void
 	{
-		$submitFormResponse = $this->submitForm(
-			new SubmitFormRequest(
-				'nestedForm',
-				FormPresenter::class,
-				'default',
-				[],
-				[
-				]
-			)
-		);
-		$this->assertSame(
-			['c1' => ['c2' => ['name' => ['This field is required.']]]],
-			$this->extractFormErrors($submitFormResponse)
+		$this->checkFormErrors(
+			'nestedForm',
+			"Form 'nestedForm' is not valid - 1 errors found.",
+			[
+				'formErrors' => ['This field is required.'],
+				'inputErrors' => ['c1' => ['c2' => ['name' => ['This field is required.']]]],
+			]
 		);
 	}
 
 	public function testFormErrors(): void
 	{
+		$this->checkFormErrors(
+			'formError',
+			"Form 'formError' is not valid - 1 errors found.",
+			[
+				'formErrors' => ['customError'],
+				'inputErrors' => [],
+			]
+		);
+	}
+
+	/**
+	 * @param array<mixed> $expectedErrors
+	 */
+	public function checkFormErrors(string $formName, string $expectedMessage, array $expectedErrors): void
+	{
 		try {
 			$this->assertValidForm(
 				$this->submitForm(
 					new SubmitFormRequest(
-						'nestedForm',
+						$formName,
 						FormPresenter::class,
 						'default',
 						[],
-						[
-						]
+						[]
 					)
 				)
 			);
 		} catch (ExpectationFailedException $ex) {
 			if ($failure = $ex->getComparisonFailure()) {
 				$this->assertStringContainsString(
-					"Form 'nestedForm' should not contain errors, 1 error found",
+					$expectedMessage,
 					$ex->getMessage()
 				);
 				$this->assertSame(
-					['c1' => ['c2' => ['name' => ['This field is required.']]]],
+					$expectedErrors,
 					$failure->getActual()
 				);
 				return;

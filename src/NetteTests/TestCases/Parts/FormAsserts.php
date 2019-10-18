@@ -3,6 +3,8 @@
 namespace Wavevision\NetteTests\TestCases\Parts;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\ExpectationFailedException;
+use SebastianBergmann\Comparator\ComparisonFailure;
 use Wavevision\NetteTests\Runners\InjectForms;
 use Wavevision\NetteTests\Runners\SubmitFormRequest;
 use Wavevision\NetteTests\Runners\SubmitFormResponse;
@@ -15,22 +17,28 @@ trait FormAsserts
 	protected function assertValidForm(SubmitFormResponse $submitFormResponse): void
 	{
 		$form = $submitFormResponse->getForm();
-		$errors = $this->extractFormErrors($submitFormResponse);
-		Assert::assertSame(
-			[],
-			$errors,
-			sprintf("Form '%s' should not contain errors, %s error found.", $form->getName(), count($errors))
-		);
-		//todo get global errors
-		Assert::assertTrue($form->isValid(), sprintf("Form '%s' is not valid.", $form->getName()));
-	}
-
-	/**
-	 * @return array<mixed>
-	 */
-	protected function extractFormErrors(SubmitFormResponse $submitFormResponse): array
-	{
-		return $this->forms->formatFormErrors($submitFormResponse->getForm());
+		$inputErrors = $this->forms->formatFormErrors($form);
+		$globalErrors = $form->getErrors();
+		if (!$form->isValid()) {
+			$errors = [
+				'formErrors' => $globalErrors,
+				'inputErrors' => $inputErrors,
+			];
+			throw new ExpectationFailedException(
+				sprintf(
+					"Form '%s' is not valid - %s errors found.",
+					$submitFormResponse->getSubmitFormRequest()->getFormName(),
+					count($globalErrors)
+				),
+				new ComparisonFailure(
+					'no errors',
+					$errors,
+					'no errors',
+					print_r($errors, true)
+				)
+			);
+		}
+		Assert::assertTrue($form->isValid());
 	}
 
 	protected function submitForm(SubmitFormRequest $submitFormRequest): SubmitFormResponse
