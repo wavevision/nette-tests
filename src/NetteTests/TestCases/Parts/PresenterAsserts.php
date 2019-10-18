@@ -95,6 +95,18 @@ trait PresenterAsserts
 		return $this->extractForwardResponse($presenterResponse)->getRequest();
 	}
 
+	/**
+	 * @return array<mixed>
+	 */
+	protected function extractFlashMessages(PresenterResponse $presenterResponse): array
+	{
+		$flashes = [];
+		foreach ($presenterResponse->getPresenterRequest()->getPresenter()->getTemplate()->flashes as $flash) {
+			$flashes[] = (array)$flash;
+		}
+		return $flashes;
+	}
+
 	protected function runPresenter(PresenterRequest $presenterRequest): PresenterResponse
 	{
 		$this->presenters->setup($presenterRequest);

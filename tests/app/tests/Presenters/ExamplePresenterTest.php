@@ -15,6 +15,21 @@ use Wavevision\NetteTests\TestCases\PresenterTestCase;
 class ExamplePresenterTest extends PresenterTestCase
 {
 
+	public function testFlashMessage(): void
+	{
+		$this->assertSame(
+			[
+				[
+					'message' => 'Hello there!',
+					'type' => 'warning',
+				],
+			],
+			$this->extractFlashMessages(
+				$this->runPresenter(new PresenterRequest(ExamplePresenter::class, 'flash'))
+			)
+		);
+	}
+
 	public function testAjaxRequest(): void
 	{
 		$this->assertInstanceOf(

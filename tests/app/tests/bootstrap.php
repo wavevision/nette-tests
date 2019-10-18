@@ -4,6 +4,7 @@ use Nette\Configurator;
 use Wavevision\NetteTests\Configuration;
 
 require __DIR__ . '/../../../vendor/autoload.php';
+Configuration::setup();
 Configuration::setConfiguratorFactory(
 	function (): Configurator {
 		$configurator = new Configurator();

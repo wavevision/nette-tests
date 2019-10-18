@@ -20,4 +20,9 @@ class Configuration
 		return self::$configuratorFactory;
 	}
 
+	public static function setup(): void
+	{
+		ob_start();
+	}
+
 }

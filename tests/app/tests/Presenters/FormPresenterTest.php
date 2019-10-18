@@ -12,7 +12,6 @@ class FormPresenterTest extends PresenterTestCase
 
 	public function testSubmitForm(): void
 	{
-		$this->assertEquals([], []);
 		$this->assertValidForm(
 			$this->submitForm(
 				new SubmitFormRequest(

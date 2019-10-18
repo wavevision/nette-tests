@@ -48,4 +48,10 @@ class ExamplePresenter extends Presenter
 		$this->forward('default');
 	}
 
+	public function actionFlash(): void
+	{
+		$this->flashMessage('Hello there!', 'warning');
+		$this->terminate();
+	}
+
 }
