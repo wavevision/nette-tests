@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Wavevision\NetteTests\Configuration;
 use Wavevision\NetteTests\TestCases\Parts\SetupContainer;
 
-class DIContainerTestCase extends TestCase
+abstract class DIContainerTestCase extends TestCase
 {
 
 	use SetupContainer;
