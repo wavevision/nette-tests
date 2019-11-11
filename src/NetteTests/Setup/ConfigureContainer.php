@@ -14,12 +14,18 @@ class ConfigureContainer
 
 	use SmartObject;
 
-	public function process(Configurator $configurator, TestCase $testCase): Container
+	public static function addConfig(Configurator $configurator): void
 	{
 		$configurator->addConfig(self::SERVICES_CONFIG);
+	}
+
+	public function process(Configurator $configurator, TestCase $testCase): Container
+	{
+		self::addConfig($configurator);
 		$container = $configurator->createContainer();
 		$setupInjects = $container->getByType(AllowInjects::class);
 		$setupInjects->process($container, $testCase);
 		return $container;
 	}
+
 }

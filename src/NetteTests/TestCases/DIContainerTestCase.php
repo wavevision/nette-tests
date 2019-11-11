@@ -14,7 +14,7 @@ abstract class DIContainerTestCase extends TestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
-		$this->setupContainer(Configuration::createConfigurator($this), $this);
+		$this->setupContainer(Configuration::createConfigurator(), $this);
 	}
 
 }

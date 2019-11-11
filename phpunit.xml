@@ -12,6 +12,7 @@
         cacheResultFile="temp/.phpunit.result.cache"
         stopOnDefect="true"
         executionOrder="defects"
+        processIsolation="true"
 >
     <testsuites>
         <testsuite name="tests">

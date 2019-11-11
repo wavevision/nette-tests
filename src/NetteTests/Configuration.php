@@ -3,7 +3,6 @@
 namespace Wavevision\NetteTests;
 
 use Nette\Configurator;
-use PHPUnit\Framework\TestCase;
 
 class Configuration
 {
@@ -15,11 +14,10 @@ class Configuration
 
 	public static function setup(callable $configuratorFactory): void
 	{
-		ob_start();
 		self::$configuratorFactory = $configuratorFactory;
 	}
 
-	public static function createConfigurator(TestCase $testCase): Configurator
+	public static function createConfigurator(): Configurator
 	{
 		$configuratorFactory = self::$configuratorFactory;
 		if (!is_callable($configuratorFactory)) {
@@ -30,7 +28,7 @@ class Configuration
 				)
 			);
 		}
-		$configurator = $configuratorFactory($testCase);
+		$configurator = $configuratorFactory();
 		if ($configurator instanceof Configurator) {
 			return $configurator;
 		} else {
