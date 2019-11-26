@@ -25,4 +25,9 @@ class ExampleModel
 		return $this->request->getUrl()->getDomain();
 	}
 
+	public function getRemoteAddress(): ?string
+	{
+		return $this->request->getRemoteAddress();
+	}
+
 }

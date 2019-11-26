@@ -46,6 +46,11 @@ class RequestMock extends Request
 	 */
 	private $postMock;
 
+	/**
+	 * @var string
+	 */
+	private $remoteAddressMock;
+
 	public function __construct()
 	{
 		$urlScript = new UrlScript(self::URL);
@@ -170,6 +175,20 @@ class RequestMock extends Request
 	public function isSameSite(): bool
 	{
 		return $this->isSameSiteMock;
+	}
+
+	public function getRemoteAddress(): ?string
+	{
+		return $this->remoteAddressMock ?? parent::getRemoteAddress();
+	}
+
+	/**
+	 * @return static
+	 */
+	public function setRemoteAddressMock(string $remoteAddressMock)
+	{
+		$this->remoteAddressMock = $remoteAddressMock;
+		return $this;
 	}
 
 }
