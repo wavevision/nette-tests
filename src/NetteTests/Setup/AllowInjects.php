@@ -16,6 +16,14 @@ class AllowInjects
 
 	public function process(Container $container, TestCase $testCase): void
 	{
+		$this->fromCallback(
+			$testCase,
+			[$container, 'getByType']
+		);
+	}
+
+	public function fromCallback(object $testCase, callable $getService): void
+	{
 		// dont judge me
 		$ref = new ReflectionClass($testCase);
 		$injectMethods = array_filter(
@@ -30,9 +38,8 @@ class AllowInjects
 			if ($parameterType === null) {
 				continue;
 			}
-			$testCase->{$method->getName()}(
-				$container->getByType($parameterType->getName())
-			);
+			$testCase->{$method->getName()}($getService($parameterType->getName()));
 		}
 	}
+
 }
