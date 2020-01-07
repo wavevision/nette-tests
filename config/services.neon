@@ -1,8 +1,8 @@
 services:
 	http.request: Wavevision\NetteTests\Mocks\RequestMock
 	- factory: Wavevision\NetteTests\Runners\Presenters
-	  inject: on
+	  inject: true
 	- factory: Wavevision\NetteTests\Runners\Forms
-	  inject: on
+	  inject: true
 	- factory: Wavevision\NetteTests\Setup\AllowInjects
-	  inject: on
+	  inject: true
