@@ -32,7 +32,7 @@
     "php": ">=7.2",
     "nette/application": "^3.0",
     "nette/bootstrap": "^3.0",
-    "nette/caching": "3.0",
+    "nette/caching": "^3.0",
     "nette/di": "^3.0",
     "nette/finder": "^2.5",
     "nette/forms": "^3.0",
