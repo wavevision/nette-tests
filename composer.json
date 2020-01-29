@@ -29,7 +29,8 @@
     }
   },
   "require": {
-    "php": ">=7.2",
+    "ext-fileinfo": "*",
+    "latte/latte": "^2.5",
     "nette/application": "^3.0",
     "nette/bootstrap": "^3.0",
     "nette/caching": "^3.0",
@@ -38,9 +39,10 @@
     "nette/forms": "^3.0",
     "nette/http": "^3.0",
     "nette/utils": "^3.0",
-    "latte/latte": "^2.5",
+    "php": ">=7.2",
+    "phpunit/phpunit": "^8.4",
     "tracy/tracy": "^2.6",
-    "phpunit/phpunit": "^8.4"
+    "wavevision/utils": "^2.2"
   },
   "require-dev": {
     "wavevision/coding-standard": "^1.1.0",
