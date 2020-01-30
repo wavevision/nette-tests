@@ -1,0 +1,12 @@
+<?php declare(strict_types = 1);
+
+use Wavevision\DIServiceAnnotation\Configuration;
+use Wavevision\DIServiceAnnotation\Runner;
+
+require_once fromRoot('vendor/autoload.php');
+function fromRoot(string $path): string
+{
+	return __DIR__ . '/../' . $path;
+}
+
+Runner::run((new Configuration(fromRoot('src'), fromRoot('config/services.neon'))));

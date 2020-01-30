@@ -149,4 +149,13 @@
         </exec>
     </target>
 
+    <target name="di" depends="reset">
+        <exec executable="php"
+              logoutput="true"
+              passthru="true"
+              checkreturn="true">
+            <arg value="bin/extract-services.php"/>
+        </exec>
+    </target>
+
 </project>

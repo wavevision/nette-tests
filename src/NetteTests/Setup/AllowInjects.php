@@ -8,7 +8,11 @@ use Nette\Utils\Strings;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
+use Wavevision\DIServiceAnnotation\DIService;
 
+/**
+ * @DIService
+ */
 class AllowInjects
 {
 

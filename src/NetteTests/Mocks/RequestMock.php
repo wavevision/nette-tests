@@ -4,8 +4,12 @@ namespace Wavevision\NetteTests\Mocks;
 
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NetteTests\InvalidState;
 
+/**
+ * @DIService(generateInject=true, name="http.request")
+ */
 class RequestMock extends Request
 {
 

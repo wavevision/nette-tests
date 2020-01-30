@@ -6,7 +6,11 @@ use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Forms\Container;
 use Nette\Forms\IControl;
+use Wavevision\DIServiceAnnotation\DIService;
 
+/**
+ * @DIService(generateInject=true)
+ */
 class Forms
 {
 

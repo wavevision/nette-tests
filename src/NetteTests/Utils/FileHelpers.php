@@ -2,13 +2,18 @@
 
 namespace Wavevision\NetteTests\Utils;
 
+use finfo;
 use Nette\Http\FileUpload;
-use Nette\StaticClass;
+use Nette\SmartObject;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Random;
-use Wavevision\NetteTests\InvalidState;
+use Wavevision\DIServiceAnnotation\DIService;
+use Wavevision\Utils\Finder;
 use Wavevision\Utils\Path;
 
+/**
+ * @DIService(generateInject=true, params={"%tempDir%"})
+ */
 class FileHelpers
 {
 
@@ -20,83 +25,99 @@ class FileHelpers
 
 	public const PDF = 'document.pdf';
 
+	public const TEST_SOURCE_FILES = 'test-source-files';
+
 	public const TEST_OUTPUT_FILES = 'test-output-files';
 
-	use StaticClass;
+	use SmartObject;
+
+	private string $defaultOutputDirectory;
+
+	public function __construct(string $tempDir)
+	{
+		$this->setDefaultOutputDirectory(Path::join($tempDir, self::TEST_OUTPUT_FILES));
+	}
 
 	/**
-	 * @var string
+	 * @return static
 	 */
-	public static $outputDirectory = __DIR__;
-
-	public static function sourceFile(string $directory, string $name): string
+	public function setDefaultOutputDirectory(string $defaultOutputDirectory)
 	{
-		return Path::join($directory, 'test-source-files', $name);
+		$this->defaultOutputDirectory = $defaultOutputDirectory;
+		return $this;
 	}
 
-	public static function outputFile(string $directory, string $name): string
+	public function getDefaultOutputDirectory(): string
 	{
-		return Path::join(self::outputDirectory($directory), $name);
+		return $this->defaultOutputDirectory;
 	}
 
-	public static function outputDirectory(string $directory): string
+	public function sourceFile(string $directory, string $name): string
 	{
-		return self::createDirectory(Path::join($directory, self::TEST_OUTPUT_FILES));
+		return Path::join($directory, self::TEST_SOURCE_FILES, $name);
 	}
 
-	public static function png(): string
+	public function outputFile(string $directory, string $name): string
 	{
-		return self::file(self::PNG);
+		return Path::join($this->outputDirectory(Path::join($directory, self::TEST_OUTPUT_FILES)), $name);
 	}
 
-	public static function jpg(): string
+	public function outputDirectory(string $directory): string
 	{
-		return self::file(self::JPG);
+		return $this->createDirectory($directory);
 	}
 
-	public static function html(): string
+	public function png(): string
 	{
-		return self::file(self::HTML);
+		return $this->file(self::PNG);
 	}
 
-	public static function pdf(): string
+	public function jpg(): string
 	{
-		return self::file(self::PDF);
+		return $this->file(self::JPG);
 	}
 
-	public static function pngFileUpload(): FileUpload
+	public function html(): string
 	{
-		return self::getFileUploadFromFile(self::png());
+		return $this->file(self::HTML);
 	}
 
-	public static function pdfFileUpload(): FileUpload
+	public function pdf(): string
 	{
-		return self::getFileUploadFromFile(self::pdf());
+		return $this->file(self::PDF);
 	}
 
-	public static function jpgFileUpload(): FileUpload
+	public function pngFileUpload(): FileUpload
 	{
-		return self::getFileUploadFromFile(self::jpg());
+		return $this->getFileUploadFromFile($this->png());
 	}
 
-	public static function file(string $fileName): string
+	public function pdfFileUpload(): FileUpload
 	{
-		$original = self::getSourceFile($fileName);
-		$testFile = self::outputDirectory(self::$outputDirectory) . '/' . Random::generate() . basename($original);
+		return $this->getFileUploadFromFile($this->pdf());
+	}
+
+	public function jpgFileUpload(): FileUpload
+	{
+		return $this->getFileUploadFromFile($this->jpg());
+	}
+
+	public function file(string $fileName): string
+	{
+		$original = $this->getSourceFile($fileName);
+		$testFile = $this->outputDirectory($this->defaultOutputDirectory) . '/' . Random::generate() . basename(
+			$original
+		);
 		FileSystem::copy($original, $testFile);
 		return $testFile;
 	}
 
-	public static function getFileUploadFromFile(string $filepath): FileUpload
+	public function getFileUploadFromFile(string $filepath): FileUpload
 	{
-		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		if ($finfo === false) {
-			throw new InvalidState('Failed to get fileinfo.');
-		}
 		return new FileUpload(
 			[
 				'name' => basename($filepath),
-				'type' => finfo_file($finfo, $filepath),
+				'type' => (new finfo())->file($filepath),
 				'size' => filesize($filepath),
 				'tmp_name' => $filepath,
 				'error' => UPLOAD_ERR_OK,
@@ -104,7 +125,7 @@ class FileHelpers
 		);
 	}
 
-	public static function corruptedFileUpload(): FileUpload
+	public function corruptedFileUpload(): FileUpload
 	{
 		return new FileUpload(
 			[
@@ -117,15 +138,32 @@ class FileHelpers
 		);
 	}
 
-	private static function createDirectory(string $name): string
+	public function cleanDefaultOutput(): void
+	{
+		FileSystem::delete($this->getDefaultOutputDirectory());
+	}
+
+	public function cleanCustomOutput(string $directory): void
+	{
+		$directories = [];
+		/** @var \SplFileInfo $directory */
+		foreach (Finder::findDirectories(self::TEST_OUTPUT_FILES)->from($directory) as $directory) {
+			$directories[] = $directory->getPathname();
+		}
+		foreach ($directories as $directory) {
+			FileSystem::delete($directory);
+		}
+	}
+
+	private function createDirectory(string $name): string
 	{
 		FileSystem::createDir($name);
 		return $name;
 	}
 
-	private static function getSourceFile(string $name): string
+	private function getSourceFile(string $name): string
 	{
-		return sprintf('%s/files/%s', __DIR__, $name);
+		return Path::join(__DIR__, self::TEST_SOURCE_FILES, $name);
 	}
 
 }

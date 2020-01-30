@@ -17,6 +17,12 @@
     }
   ],
   "license": "MIT",
+  "config": {
+    "platform": {
+      "php": "7.4"
+    },
+    "sort-packages": true
+  },
   "autoload": {
     "psr-4": {
       "Wavevision\\NetteTests\\": "src/NetteTests/"
@@ -39,7 +45,7 @@
     "nette/forms": "^3.0",
     "nette/http": "^3.0",
     "nette/utils": "^3.0",
-    "php": ">=7.2",
+    "php": ">=7.4",
     "phpunit/phpunit": "^8.4",
     "tracy/tracy": "^2.6",
     "wavevision/utils": "^2.2"
@@ -52,7 +58,8 @@
     "phpstan/phpstan-phpunit": "^0.11.2",
     "php-coveralls/php-coveralls": "^2.1",
     "phpstan/phpstan-nette": "^0.11.1",
-    "phpstan/extension-installer": "^1.0"
+    "phpstan/extension-installer": "^1.0",
+    "wavevision/di-service-annotation": "^3.0"
   },
   "scripts": {
     "phing": "phing"

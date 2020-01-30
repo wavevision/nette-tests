@@ -6,9 +6,13 @@ use Nette\Application\IPresenterFactory;
 use Nette\Application\PresenterFactory;
 use Nette\Application\Request;
 use Nette\Application\UI\Presenter;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NetteTests\InvalidState;
 use Wavevision\NetteTests\Mocks\RequestMock;
 
+/**
+ * @DIService(generateInject=true)
+ */
 class Presenters
 {
 

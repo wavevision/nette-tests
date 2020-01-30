@@ -1,8 +1,14 @@
+# Generated file, do not modify directly!
 services:
-	http.request: Wavevision\NetteTests\Mocks\RequestMock
-	- factory: Wavevision\NetteTests\Runners\Presenters
+	http.request:
+	  factory: Wavevision\NetteTests\Mocks\RequestMock
 	  inject: true
 	- factory: Wavevision\NetteTests\Runners\Forms
 	  inject: true
+	- factory: Wavevision\NetteTests\Runners\Presenters
+	  inject: true
 	- factory: Wavevision\NetteTests\Setup\AllowInjects
+	  inject: true
+	- factory: Wavevision\NetteTests\Utils\FileHelpers
+	  arguments: [%tempDir%]
 	  inject: true
