@@ -117,7 +117,7 @@ class FileHelpers
 		return new FileUpload(
 			[
 				'name' => basename($filepath),
-				'type' => (new finfo())->file($filepath),
+				'type' => (new finfo(FILEINFO_MIME_TYPE))->file($filepath),
 				'size' => filesize($filepath),
 				'tmp_name' => $filepath,
 				'error' => UPLOAD_ERR_OK,
