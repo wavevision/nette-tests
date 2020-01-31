@@ -2,12 +2,12 @@
 
 namespace Wavevision\NetteTests\Utils;
 
-use finfo;
 use Nette\Http\FileUpload;
 use Nette\SmartObject;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Random;
 use Wavevision\DIServiceAnnotation\DIService;
+use Wavevision\Utils\FileInfo;
 use Wavevision\Utils\Finder;
 use Wavevision\Utils\Path;
 
@@ -114,11 +114,12 @@ class FileHelpers
 
 	public function getFileUploadFromFile(string $filepath): FileUpload
 	{
+		$fileInfo = new FileInfo($filepath);
 		return new FileUpload(
 			[
-				'name' => basename($filepath),
-				'type' => (new finfo(FILEINFO_MIME_TYPE))->file($filepath),
-				'size' => filesize($filepath),
+				'name' => $fileInfo->getBaseName(),
+				'type' => $fileInfo->getContentType(),
+				'size' => $fileInfo->getSize(),
 				'tmp_name' => $filepath,
 				'error' => UPLOAD_ERR_OK,
 			]
