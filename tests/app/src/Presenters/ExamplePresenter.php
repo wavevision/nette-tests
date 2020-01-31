@@ -54,4 +54,11 @@ class ExamplePresenter extends Presenter
 		$this->terminate();
 	}
 
+	public function actionQueryMock(): void
+	{
+		if ($this->getHttpRequest()->getQuery('q') === '42') {
+			$this->terminate();
+		}
+	}
+
 }

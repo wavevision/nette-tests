@@ -51,6 +51,11 @@ class RequestMock extends Request
 	private $postMock;
 
 	/**
+	 * @var array<mixed>
+	 */
+	private $queryMock;
+
+	/**
 	 * @var string
 	 */
 	private $remoteAddressMock;
@@ -94,6 +99,20 @@ class RequestMock extends Request
 		}
 		parent::getPost();
 		return $this->postMock[$key] ?? null;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getQuery(?string $key = null)
+	{
+		if ($this->queryMock === null) {
+			return parent::getQuery($key);
+		}
+		if ($key === null) {
+			return $this->queryMock;
+		}
+		return $this->queryMock[$key] ?? null;
 	}
 
 	/**
@@ -192,6 +211,16 @@ class RequestMock extends Request
 	public function setRemoteAddressMock(string $remoteAddressMock)
 	{
 		$this->remoteAddressMock = $remoteAddressMock;
+		return $this;
+	}
+
+	/**
+	 * @param array<mixed> $queryMock
+	 * @return static
+	 */
+	public function setQueryMock(array $queryMock)
+	{
+		$this->queryMock = $queryMock;
 		return $this;
 	}
 

@@ -171,6 +171,13 @@ class ExamplePresenterTest extends PresenterTestCase
 		$this->extractForwardResponse($presenterResponse);
 	}
 
+	public function testQueryMock(): void
+	{
+		$presenterRequest = new PresenterRequest(ExamplePresenter::class, 'queryMock', ['q' => '42']);
+		$presenterResponse = $this->runPresenter($presenterRequest);
+		$this->assertInstanceOf(VoidResponse::class, $presenterResponse->getResponse());
+	}
+
 	private function getTerminatePresenterResponse(): PresenterResponse
 	{
 		$presenterRequest = new PresenterRequest(ExamplePresenter::class, 'terminateResponse');

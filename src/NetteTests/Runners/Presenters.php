@@ -75,6 +75,7 @@ class Presenters
 	{
 		$httpRequest = $presenterRequest->getPresenter()->getHttpRequest();
 		if ($httpRequest instanceof RequestMock) {
+			$httpRequest->setQueryMock($presenterRequest->getQuery());
 			$httpRequest->setAjaxMock($presenterRequest->getAjax());
 			$httpRequest->setPostMock($presenterRequest->getPost());
 			$httpRequest->setMethodMock($presenterRequest->getMethod());
