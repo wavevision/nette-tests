@@ -107,7 +107,11 @@ class RequestMock extends Request
 	public function getQuery(?string $key = null)
 	{
 		if ($this->queryMock === null) {
-			return parent::getQuery($key);
+			if ($key === null) {
+				return parent::getQuery();
+			} else {
+				return parent::getQuery($key);
+			}
 		}
 		if ($key === null) {
 			return $this->queryMock;
