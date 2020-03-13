@@ -10,10 +10,7 @@ use Wavevision\NetteTests\Setup\ConfigureContainer;
 trait SetupContainer
 {
 
-	/**
-	 * @var Container
-	 */
-	private $container;
+	private Container $container;
 
 	protected function setupContainer(Configurator $configurator, TestCase $testCase): void
 	{

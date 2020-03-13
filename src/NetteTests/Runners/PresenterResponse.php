@@ -10,15 +10,9 @@ class PresenterResponse
 
 	use SmartObject;
 
-	/**
-	 * @var PresenterRequest
-	 */
-	private $presenterRequest;
+	private PresenterRequest $presenterRequest;
 
-	/**
-	 * @var IResponse
-	 */
-	private $response;
+	private IResponse $response;
 
 	public function __construct(PresenterRequest $presenterRequest, IResponse $response)
 	{

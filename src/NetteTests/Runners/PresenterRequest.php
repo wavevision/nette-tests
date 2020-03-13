@@ -15,55 +15,37 @@ class PresenterRequest
 
 	public const SIGNAL_QUERY_PARAMETER = 'do';
 
-	/**
-	 * @var string
-	 */
-	private $className;
+	private string $className;
 
-	/**
-	 * @var string
-	 */
-	private $action;
+	private string $action;
 
 	/**
 	 * @var array<mixed>
 	 */
-	private $query;
+	private array $query;
 
-	/**
-	 * @var string
-	 */
-	private $method;
+	private string $method;
 
 	/**
 	 * @var array<mixed>
 	 */
-	private $post;
+	private array $post;
 
 	/**
 	 * @var array<mixed>
 	 */
-	private $files;
+	private array $files;
 
-	/**
-	 * @var Presenter
-	 */
-	private $presenter;
+	private Presenter $presenter;
 
-	/**
-	 * @var string
-	 */
-	private $presenterName;
+	private string $presenterName;
 
 	/**
 	 * @var callable[]
 	 */
-	private $beforeRunCallbacks = [];
+	private array $beforeRunCallbacks = [];
 
-	/**
-	 * @var bool|null
-	 */
-	private $ajax;
+	private ?bool $ajax = null;
 
 	/**
 	 * @param array<mixed> $query

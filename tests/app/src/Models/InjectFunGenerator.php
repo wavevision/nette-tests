@@ -5,10 +5,7 @@ namespace Wavevision\NetteTests\TestApp\Models;
 trait InjectFunGenerator
 {
 
-	/**
-	 * @var FunGenerator
-	 */
-	protected $funGenerator;
+	protected FunGenerator $funGenerator;
 
 	public function injectFunGenerator(FunGenerator $funGenerator): void
 	{

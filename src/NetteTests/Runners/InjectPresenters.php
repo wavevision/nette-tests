@@ -5,13 +5,11 @@ namespace Wavevision\NetteTests\Runners;
 trait InjectPresenters
 {
 
-	/**
-	 * @var Presenters
-	 */
-	private $presenters;
+	protected Presenters $presenters;
 
 	public function injectPresenters(Presenters $presenters): void
 	{
 		$this->presenters = $presenters;
 	}
+
 }

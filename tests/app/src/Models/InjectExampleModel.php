@@ -5,10 +5,7 @@ namespace Wavevision\NetteTests\TestApp\Models;
 trait InjectExampleModel
 {
 
-	/**
-	 * @var ExampleModel
-	 */
-	private $exampleModel;
+	private ExampleModel $exampleModel;
 
 	public function injectExampleModel(ExampleModel $exampleModel): void
 	{

@@ -10,10 +10,7 @@ class ExampleModel
 
 	use SmartObject;
 
-	/**
-	 * @var Request
-	 */
-	private $request;
+	private Request $request;
 
 	public function __construct(Request $request)
 	{

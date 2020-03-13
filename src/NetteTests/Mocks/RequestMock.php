@@ -15,55 +15,48 @@ class RequestMock extends Request
 
 	public const URL = 'http://localhost';
 
-	/**
-	 * @var bool|null
-	 */
-	private $ajaxMock;
+	private ?bool $ajaxMock;
 
-	/**
-	 * @var string|null
-	 */
-	private $rawBodyMock;
+	private ?string $rawBodyMock;
 
 	/**
 	 * @var array<mixed>
 	 */
-	private $filesMock;
+	private array $filesMock;
 
-	/**
-	 * @var string
-	 */
-	private $methodMock;
+	private ?string $methodMock;
 
 	/**
 	 * @var array<mixed>
 	 */
-	private $headersMock;
+	private array $headersMock;
 
-	/**
-	 * @var bool
-	 */
-	private $isSameSiteMock;
+	private bool $isSameSiteMock;
 
 	/**
 	 * @var array<mixed>
 	 */
-	private $postMock;
+	private array $postMock;
 
 	/**
 	 * @var array<mixed>
 	 */
-	private $queryMock;
+	private ?array $queryMock;
 
-	/**
-	 * @var string
-	 */
-	private $remoteAddressMock;
+	private ?string $remoteAddressMock;
 
 	public function __construct()
 	{
 		$urlScript = new UrlScript(self::URL);
+		$this->ajaxMock = null;
+		$this->rawBodyMock = null;
+		$this->filesMock = [];
+		$this->methodMock = null;
+		$this->headersMock = [];
 		$this->isSameSiteMock = true;
+		$this->postMock = [];
+		$this->queryMock = null;
+		$this->remoteAddressMock = null;
 		parent::__construct($urlScript);
 	}
 
@@ -138,7 +131,7 @@ class RequestMock extends Request
 
 	public function getMethod(): string
 	{
-		return $this->methodMock;
+		return $this->methodMock ?? $this->method;
 	}
 
 	/**
@@ -151,7 +144,7 @@ class RequestMock extends Request
 	}
 
 	/**
-	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 * @param mixed $header
 	 */
 	public function getHeader($header): ?string
 	{
@@ -183,7 +176,8 @@ class RequestMock extends Request
 	}
 
 	/**
-	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+	 * @param mixed $header
+	 * @param mixed $value
 	 */
 	public function addHeaderMock($header, $value): RequestMock
 	{

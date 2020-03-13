@@ -16,10 +16,7 @@ use Wavevision\NetteTests\Mocks\RequestMock;
 class Presenters
 {
 
-	/**
-	 * @var PresenterFactory
-	 */
-	private $presenterFactory;
+	private PresenterFactory $presenterFactory;
 
 	public function __construct(IPresenterFactory $presenterFactory)
 	{

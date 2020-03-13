@@ -10,10 +10,7 @@ class SubmitFormRequest extends PresenterRequest
 
 	use SmartObject;
 
-	/**
-	 * @var string
-	 */
-	private $formName;
+	private string $formName;
 
 	/**
 	 * @param array<mixed> $query
@@ -42,4 +39,5 @@ class SubmitFormRequest extends PresenterRequest
 		$this->formName = $formName;
 		return $this;
 	}
+
 }

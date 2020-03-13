@@ -10,20 +10,11 @@ class SubmitFormResponse
 
 	use SmartObject;
 
-	/**
-	 * @var SubmitFormRequest
-	 */
-	private $submitFormRequest;
+	private SubmitFormRequest $submitFormRequest;
 
-	/**
-	 * @var PresenterResponse
-	 */
-	private $presenterResponse;
+	private PresenterResponse $presenterResponse;
 
-	/**
-	 * @var Form
-	 */
-	private $form;
+	private Form $form;
 
 	public function __construct(SubmitFormRequest $submitFormRequest, PresenterResponse $presenterResponse, Form $form)
 	{
@@ -46,4 +37,5 @@ class SubmitFormResponse
 	{
 		return $this->form;
 	}
+
 }

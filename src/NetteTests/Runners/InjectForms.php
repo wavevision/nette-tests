@@ -5,13 +5,11 @@ namespace Wavevision\NetteTests\Runners;
 trait InjectForms
 {
 
-	/**
-	 * @var Forms
-	 */
-	private $forms;
+	protected Forms $forms;
 
 	public function injectForms(Forms $forms): void
 	{
 		$this->forms = $forms;
 	}
+
 }
