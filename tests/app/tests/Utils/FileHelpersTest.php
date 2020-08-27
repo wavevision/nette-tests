@@ -47,7 +47,7 @@ class FileHelpersTest extends DIContainerTestCase
 		$this->fileHelpers->pngFileUpload();
 		$this->assertDirectoryExists($this->fileHelpers->getDefaultOutputDirectory());
 		$this->fileHelpers->cleanDefaultOutput();
-		$this->assertDirectoryNotExists($this->fileHelpers->getDefaultOutputDirectory());
+		$this->assertDirectoryDoesNotExist($this->fileHelpers->getDefaultOutputDirectory());
 	}
 
 	public function testCleanCustom(): void
@@ -57,7 +57,7 @@ class FileHelpersTest extends DIContainerTestCase
 		$dir = Path::join(__DIR__, FileHelpers::TEST_OUTPUT_FILES);
 		$this->assertDirectoryExists($dir);
 		$this->fileHelpers->cleanCustomOutput(__DIR__);
-		$this->assertDirectoryNotExists($dir);
+		$this->assertDirectoryDoesNotExist($dir);
 	}
 
 }

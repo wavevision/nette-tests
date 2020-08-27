@@ -1,35 +1,33 @@
 <?xml version="1.0"?>
 <phpunit
-  bootstrap="tests/bootstrap.php"
-  colors="true"
   backupGlobals="false"
   backupStaticAttributes="false"
   beStrictAboutChangesToGlobalState="false"
   beStrictAboutOutputDuringTests="true"
   beStrictAboutTestsThatDoNotTestAnything="true"
   beStrictAboutTodoAnnotatedTests="true"
+  bootstrap="tests/bootstrap.php"
   cacheResult="true"
   cacheResultFile="temp/.phpunit.result.cache"
-  stopOnDefect="true"
+  colors="true"
   executionOrder="defects"
   processIsolation="true"
+  stopOnDefect="true"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+    <report>
+      <text outputFile="php://stdout" showUncoveredFiles="true" showOnlySummary="true"/>
+    </report>
+  </coverage>
   <testsuites>
     <testsuite name="tests">
       <directory suffix="Test.php">tests/app/tests</directory>
     </testsuite>
   </testsuites>
-  <logging>
-    <log
-      type="coverage-text"
-      target="php://stdout"
-      showUncoveredFiles="true"
-      showOnlySummary="true"
-    />
-  </logging>
-  <filter>
-    <whitelist processUncoveredFilesFromWhitelist="true">
-      <directory suffix=".php">src</directory>
-    </whitelist>
-  </filter>
+  <logging/>
 </phpunit>
