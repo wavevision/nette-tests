@@ -6,6 +6,7 @@ use Nette\Http\Request;
 use Nette\Http\UrlScript;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NetteTests\InvalidState;
+use function sprintf;
 
 /**
  * @DIService(generateInject=true, name="http.request")

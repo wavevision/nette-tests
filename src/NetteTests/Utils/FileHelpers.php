@@ -6,16 +6,22 @@ use Nette\Http\FileUpload;
 use Nette\SmartObject;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Random;
+use SplFileInfo;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\Utils\FileInfo;
 use Wavevision\Utils\Finder;
 use Wavevision\Utils\Path;
+use function basename;
+use const UPLOAD_ERR_CANT_WRITE;
+use const UPLOAD_ERR_OK;
 
 /**
  * @DIService(generateInject=true, params={"%tempDir%"})
  */
 class FileHelpers
 {
+
+	use SmartObject;
 
 	public const PNG = 'image.png';
 
@@ -28,8 +34,6 @@ class FileHelpers
 	public const TEST_SOURCE_FILES = 'test-source-files';
 
 	public const TEST_OUTPUT_FILES = 'test-output-files';
-
-	use SmartObject;
 
 	private string $defaultOutputDirectory;
 
@@ -147,7 +151,7 @@ class FileHelpers
 	public function cleanCustomOutput(string $directory): void
 	{
 		$directories = [];
-		/** @var \SplFileInfo $directory */
+		/** @var SplFileInfo $directory */
 		foreach (Finder::findDirectories(self::TEST_OUTPUT_FILES)->from($directory) as $directory) {
 			$directories[] = $directory->getPathname();
 		}

@@ -7,6 +7,7 @@ use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 use Wavevision\NetteTests\Utils\FileHelpers;
 use Wavevision\NetteTests\Utils\InjectFileHelpers;
 use Wavevision\Utils\Path;
+use function touch;
 
 class FileHelpersTest extends DIContainerTestCase
 {

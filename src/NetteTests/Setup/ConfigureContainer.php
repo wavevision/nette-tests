@@ -10,9 +10,9 @@ use PHPUnit\Framework\TestCase;
 class ConfigureContainer
 {
 
-	public const SERVICES_CONFIG = __DIR__ . '/../../../config/services.neon';
-
 	use SmartObject;
+
+	public const SERVICES_CONFIG = __DIR__ . '/../../../config/services.neon';
 
 	public static function addConfig(Configurator $configurator): void
 	{

@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
 use Wavevision\DIServiceAnnotation\DIService;
+use function array_filter;
 
 /**
  * @DIService

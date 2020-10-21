@@ -9,6 +9,7 @@ use Nette\Application\UI\Presenter;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NetteTests\InvalidState;
 use Wavevision\NetteTests\Mocks\RequestMock;
+use function sprintf;
 
 /**
  * @DIService(generateInject=true)
@@ -62,10 +63,9 @@ class Presenters
 
 	private function createPresenter(string $name): Presenter
 	{
+		/** @var Presenter $presenter */
 		$presenter = $this->presenterFactory->createPresenter($name);
-		if ($presenter instanceof Presenter) {
-			return $presenter;
-		}
+		return $presenter;
 	}
 
 	private function setupHttpRequest(PresenterRequest $presenterRequest): void

@@ -8,6 +8,9 @@ use SebastianBergmann\Comparator\ComparisonFailure;
 use Wavevision\NetteTests\Runners\InjectForms;
 use Wavevision\NetteTests\Runners\SubmitFormRequest;
 use Wavevision\NetteTests\Runners\SubmitFormResponse;
+use function count;
+use function print_r;
+use function sprintf;
 
 trait FormAsserts
 {
