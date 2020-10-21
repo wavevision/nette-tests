@@ -12,6 +12,7 @@ use PHPUnit\Framework\Assert;
 use Wavevision\NetteTests\Runners\InjectPresenters;
 use Wavevision\NetteTests\Runners\PresenterRequest;
 use Wavevision\NetteTests\Runners\PresenterResponse;
+use function sprintf;
 
 trait PresenterAsserts
 {

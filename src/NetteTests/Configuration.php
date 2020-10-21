@@ -3,6 +3,8 @@
 namespace Wavevision\NetteTests;
 
 use Nette\Configurator;
+use function is_callable;
+use function sprintf;
 
 class Configuration
 {

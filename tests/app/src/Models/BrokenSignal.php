@@ -2,7 +2,9 @@
 
 namespace Wavevision\NetteTests\TestApp\Models;
 
-class BrokenSignal extends \Exception
+use Exception;
+
+class BrokenSignal extends Exception
 {
 
 }

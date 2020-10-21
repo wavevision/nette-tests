@@ -21,4 +21,5 @@ trait SetupContainer
 	{
 		return $this->container;
 	}
+
 }
