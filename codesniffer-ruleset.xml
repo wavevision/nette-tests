@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <ruleset name="Wavevision NetteTests">
-    <rule ref="vendor/wavevision/coding-standard/php/ruleset.xml"/>
-    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
-        <properties>
-            <property name="rootNamespaces" type="array">
-                <element key="src/NetteTests" value="Wavevision\NetteTests"/>
-                <element key="tests/app/src" value="Wavevision\NetteTests\TestApp"/>
-                <element key="tests/app/tests" value="Wavevision\NetteTests\TestAppTests"/>
-            </property>
-        </properties>
-    </rule>
+	<rule ref="vendor/wavevision/coding-standard/php/ruleset.xml"/>
+	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+		<properties>
+			<property name="rootNamespaces" type="array">
+				<element key="src/NetteTests" value="Wavevision\NetteTests"/>
+				<element key="tests/app/src" value="Wavevision\NetteTests\TestApp"/>
+				<element key="tests/app/tests" value="Wavevision\NetteTests\TestAppTests"/>
+			</property>
+		</properties>
+	</rule>
 </ruleset>
