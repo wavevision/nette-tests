@@ -12,10 +12,13 @@ class ConfigureContainer
 
 	use SmartObject;
 
+	public const EXTENSIONS_CONFIG = __DIR__ . '/../../../config/extensions.neon';
+
 	public const SERVICES_CONFIG = __DIR__ . '/../../../config/services.neon';
 
 	public static function addConfig(Configurator $configurator): void
 	{
+		$configurator->addConfig(self::EXTENSIONS_CONFIG);
 		$configurator->addConfig(self::SERVICES_CONFIG);
 	}
 
