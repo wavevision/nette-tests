@@ -96,11 +96,11 @@ trait PresenterAsserts
 	/**
 	 * @return array<mixed>
 	 */
-	protected function extractFlashMessages(PresenterResponse $presenterResponse): array
+	protected function extractFlashMessages(PresenterResponse $presenterResponse, bool $toArray = true): array
 	{
 		$flashes = [];
 		foreach ($presenterResponse->getPresenterRequest()->getPresenter()->getTemplate()->flashes as $flash) {
-			$flashes[] = (array)$flash;
+			$flashes[] = $toArray ? (array)$flash : $flash;
 		}
 		return $flashes;
 	}
