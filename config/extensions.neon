@@ -1,2 +1,2 @@
 extensions:
-    - Nepada\Bridges\PresenterMappingDI\PresenterMappingExtension
+    presenterMapping: Nepada\Bridges\PresenterMappingDI\PresenterMappingExtension

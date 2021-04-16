@@ -25,6 +25,15 @@ Add callback for creating `Nette\Configurator` to [bootstrap](tests/app/tests/bo
 * [presenter](tests/app/tests/Presenters/ExamplePresenterTest.php) testing
 * [form](tests/app/tests/Presenters/FormPresenterTest.php) submit testing
 
+### Presenter mapping
+
+This testing suite lets you use your presenter classes to resolve `:Module:Presenter:action` mapping. This is achieved
+using [nepada/presenter-mapping](https://github.com/nepada/presenter-mapping) extension which is registered in your
+tests DIC as `presenterMapping`.
+
+If your tested app uses this extension for presenter mapping as well, **make sure you register it in your config with
+the same name**.
+
 ## Learn
 
 See [this great talk](https://www.youtube.com/watch?v=E1r0EhTkWn4) by [Jakub Filla](https://github.com/jfilla) to learn
