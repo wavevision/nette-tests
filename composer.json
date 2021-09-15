@@ -32,7 +32,7 @@
     }
   },
   "require": {
-    "php": ">=7.4",
+    "php": ">=8.0",
     "ext-fileinfo": "*",
     "latte/latte": "^2.10",
     "nepada/presenter-mapping": "^2.3",
@@ -45,7 +45,7 @@
     "nette/http": "^3.1",
     "nette/utils": "^3.2",
     "phpunit/phpunit": "^9.3",
-    "tracy/tracy": "^2.6",
+    "tracy/tracy": "^2.8",
     "wavevision/utils": "^2.2"
   },
   "require-dev": {

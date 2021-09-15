@@ -14,7 +14,7 @@ jobs:
         id: phpcache
         uses: shivammathur/cache-extensions@v1
         with:
-          php-version: 7.4
+          php-version: 8
           extensions: pcov
           key: v1
       - name: Cache Php extensions
@@ -26,7 +26,7 @@ jobs:
       - name: Setup Php
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8
       - name: Setup composer cache
         id: composercache
         run: echo ::set-output name=dir::$(composer config cache-files-dir)

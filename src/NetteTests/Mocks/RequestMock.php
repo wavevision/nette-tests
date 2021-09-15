@@ -19,6 +19,8 @@ class RequestMock extends Request
 	private ?bool $ajaxMock;
 
 	private ?string $rawBodyMock;
+	
+	private bool $rawBodyMockIsSet;
 
 	/**
 	 * @var array<mixed>
@@ -53,6 +55,7 @@ class RequestMock extends Request
 		$this->rawBodyMock = null;
 		$this->filesMock = [];
 		$this->methodMock = null;
+		$this->rawBodyMockIsSet = false;
 		$this->headersMock = [];
 		$this->isSameSiteMock = true;
 		$this->postMock = [];
@@ -75,9 +78,9 @@ class RequestMock extends Request
 		return $this;
 	}
 
-	public function getRawBody(): string
+	public function getRawBody(): ?string
 	{
-		if ($this->rawBodyMock === null) {
+		if (!$this->rawBodyMockIsSet) {
 			throw new InvalidState(sprintf('Raw body is not set. Use method %s::setRawBodyMock', self::class));
 		}
 		return $this->rawBodyMock;
@@ -155,9 +158,10 @@ class RequestMock extends Request
 		return parent::getHeader($header);
 	}
 
-	public function setRawBodyMock(string $body): self
+	public function setRawBodyMock(?string $body): self
 	{
 		$this->rawBodyMock = $body;
+		$this->rawBodyMockIsSet = true;
 		return $this;
 	}
 

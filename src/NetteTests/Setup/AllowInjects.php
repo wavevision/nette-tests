@@ -8,6 +8,7 @@ use Nette\Utils\Strings;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
+use ReflectionNamedType;
 use Wavevision\DIServiceAnnotation\DIService;
 use function array_filter;
 
@@ -39,7 +40,8 @@ class AllowInjects
 		);
 		/** @var ReflectionMethod $method */
 		foreach ($injectMethods as $method) {
-			$parameterType = $method->getParameters()[0]->getClass();
+			/** @var ReflectionNamedType|null $parameterType */
+			$parameterType = $method->getParameters()[0]->getType();
 			if ($parameterType === null) {
 				continue;
 			}
