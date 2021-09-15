@@ -12,6 +12,8 @@ class FormPresenter extends BasePresenter
 		$form = new Form();
 		$form->addText('name');
 		$form->addSubmit('submit');
+		$form->onSuccess[] = function (): void {
+		};
 		return $form;
 	}
 
@@ -22,6 +24,8 @@ class FormPresenter extends BasePresenter
 		$c2 = $c1->addContainer('c2');
 		$c2->addText('name')
 			->setRequired();
+		$form->onSuccess[] = function (): void {
+		};
 		return $form;
 	}
 
@@ -29,6 +33,8 @@ class FormPresenter extends BasePresenter
 	{
 		$form = new Form();
 		$form->addError('customError');
+		$form->onSuccess[] = function (): void {
+		};
 		return $form;
 	}
 
