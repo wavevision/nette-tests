@@ -8,7 +8,9 @@ use Nette\Application\Responses\ForwardResponse;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Responses\TextResponse;
+use Nette\Application\UI\Presenter;
 use PHPUnit\Framework\Assert;
+use Wavevision\NetteTests\InvalidState;
 use Wavevision\NetteTests\Runners\InjectPresenters;
 use Wavevision\NetteTests\Runners\PresenterRequest;
 use Wavevision\NetteTests\Runners\PresenterResponse;
@@ -98,11 +100,20 @@ trait PresenterAsserts
 	 */
 	protected function extractFlashMessages(PresenterResponse $presenterResponse, bool $toArray = true): array
 	{
-		$flashes = [];
-		foreach ($presenterResponse->getPresenterRequest()->getPresenter()->getTemplate()->flashes as $flash) {
-			$flashes[] = $toArray ? (array)$flash : $flash;
+		$presenter = $presenterResponse->getPresenterRequest()->getPresenter();
+		if ($presenter instanceof Presenter) {
+			$flashes = [];
+			foreach ($presenter->getTemplate()->flashes as $flash) {
+				$flashes[] = $toArray ? (array)$flash : $flash;
+			}
+			return $flashes;
 		}
-		return $flashes;
+		throw new InvalidState(
+			sprintf(
+				"Extract flash messages is not available. Presenter should be descendant of '%s'.",
+				Presenter::class
+			)
+		);
 	}
 
 	protected function runPresenter(PresenterRequest $presenterRequest): PresenterResponse

@@ -2,7 +2,7 @@
 
 namespace Wavevision\NetteTests\Runners;
 
-use Nette\Application\UI\Presenter;
+use Nette\Application\IPresenter;
 use Nette\Http\IRequest;
 use Nette\SmartObject;
 
@@ -36,7 +36,7 @@ class PresenterRequest
 	 */
 	private array $files;
 
-	private Presenter $presenter;
+	private IPresenter $presenter;
 
 	private string $presenterName;
 
@@ -173,12 +173,12 @@ class PresenterRequest
 		return $this;
 	}
 
-	public function getPresenter(): Presenter
+	public function getPresenter(): IPresenter
 	{
 		return $this->presenter;
 	}
 
-	public function setPresenter(Presenter $presenter): self
+	public function setPresenter(IPresenter $presenter): self
 	{
 		$this->presenter = $presenter;
 		return $this;

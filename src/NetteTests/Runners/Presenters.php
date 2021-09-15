@@ -2,6 +2,7 @@
 
 namespace Wavevision\NetteTests\Runners;
 
+use Nette\Application\IPresenter;
 use Nette\Application\IPresenterFactory;
 use Nette\Application\PresenterFactory;
 use Nette\Application\Request;
@@ -36,7 +37,9 @@ class Presenters
 			throw new InvalidState(sprintf("Presenter not found for class '%s'.", $presenterClassName));
 		}
 		$presenter = $this->createPresenter($presenterName);
-		$presenter->autoCanonicalize = false;
+		if ($presenter instanceof Presenter) {
+			$presenter->autoCanonicalize = false;
+		}
 		$presenterRequest->setPresenter($presenter);
 		$presenterRequest->setPresenterName($presenterName);
 		$this->setupHttpRequest($presenterRequest);
@@ -61,24 +64,25 @@ class Presenters
 		return new PresenterResponse($presenterRequest, $response);
 	}
 
-	private function createPresenter(string $name): Presenter
+	private function createPresenter(string $name): IPresenter
 	{
-		/** @var Presenter $presenter */
-		$presenter = $this->presenterFactory->createPresenter($name);
-		return $presenter;
+		return $this->presenterFactory->createPresenter($name);
 	}
 
 	private function setupHttpRequest(PresenterRequest $presenterRequest): void
 	{
-		$httpRequest = $presenterRequest->getPresenter()->getHttpRequest();
-		if ($httpRequest instanceof RequestMock) {
-			$httpRequest->setQueryMock($presenterRequest->getQuery());
-			$httpRequest->setAjaxMock($presenterRequest->getAjax());
-			$httpRequest->setPostMock($presenterRequest->getPost());
-			$httpRequest->setMethodMock($presenterRequest->getMethod());
-			$httpRequest->setFilesMock($presenterRequest->getFiles());
-		} else {
-			throw new InvalidState('HttpRequest should be mocked.');
+		$presenter = $presenterRequest->getPresenter();
+		if ($presenter instanceof Presenter) {
+			$httpRequest = $presenter->getHttpRequest();
+			if ($httpRequest instanceof RequestMock) {
+				$httpRequest->setQueryMock($presenterRequest->getQuery());
+				$httpRequest->setAjaxMock($presenterRequest->getAjax());
+				$httpRequest->setPostMock($presenterRequest->getPost());
+				$httpRequest->setMethodMock($presenterRequest->getMethod());
+				$httpRequest->setFilesMock($presenterRequest->getFiles());
+			} else {
+				throw new InvalidState('HttpRequest should be mocked.');
+			}
 		}
 	}
 

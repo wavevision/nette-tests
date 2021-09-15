@@ -2,8 +2,8 @@
 
 namespace Wavevision\NetteTests\Runners;
 
+use Nette\Application\IPresenter;
 use Nette\Application\UI\Form;
-use Nette\Application\UI\Presenter;
 use Nette\Forms\Container;
 use Nette\Forms\IControl;
 use Wavevision\DIServiceAnnotation\DIService;
@@ -69,7 +69,7 @@ class Forms
 		return $values;
 	}
 
-	private function findForm(Presenter $presenter, string $formName): Form
+	private function findForm(IPresenter $presenter, string $formName): Form
 	{
 		$nameParts = explode('-', $formName);
 		$current = $presenter;
