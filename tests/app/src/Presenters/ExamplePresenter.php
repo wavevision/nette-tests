@@ -61,4 +61,9 @@ class ExamplePresenter extends Presenter
 		}
 	}
 
+	public function actionHeadersMock(): void
+	{
+		$this->sendJson($this->getHttpRequest()->getHeaders());
+	}
+
 }

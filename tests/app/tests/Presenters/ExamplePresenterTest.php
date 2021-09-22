@@ -2,10 +2,12 @@
 
 namespace Wavevision\NetteTests\TestAppTests\Presenters;
 
+use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Responses\VoidResponse;
 use Nette\Http\IRequest;
 use PHPUnit\Framework\AssertionFailedError;
 use Wavevision\NetteTests\InvalidState;
+use Wavevision\NetteTests\Mocks\InjectRequestMock;
 use Wavevision\NetteTests\Runners\PresenterRequest;
 use Wavevision\NetteTests\Runners\PresenterResponse;
 use Wavevision\NetteTests\TestApp\Models\BrokenSignal;
@@ -14,6 +16,7 @@ use Wavevision\NetteTests\TestCases\PresenterTestCase;
 
 class ExamplePresenterTest extends PresenterTestCase
 {
+	use InjectRequestMock;
 
 	public function testFlashMessage(): void
 	{
@@ -176,6 +179,17 @@ class ExamplePresenterTest extends PresenterTestCase
 		$presenterRequest = new PresenterRequest(ExamplePresenter::class, 'queryMock', ['q' => '42']);
 		$presenterResponse = $this->runPresenter($presenterRequest);
 		$this->assertInstanceOf(VoidResponse::class, $presenterResponse->getResponse());
+	}
+
+	public function testHeadersMock(): void
+	{
+		$headers = ['4' => '2'];
+		$this->requestMock->setHeaderMock($headers);
+		$presenterRequest = new PresenterRequest(ExamplePresenter::class, 'headersMock');
+		$presenterResponse = $this->runPresenter($presenterRequest);
+		$response = $presenterResponse->getResponse();
+		$this->assertInstanceOf(JsonResponse::class, $response);
+		$this->assertEquals($headers, $response->getPayload());
 	}
 
 	private function getTerminatePresenterResponse(): PresenterResponse
