@@ -16,6 +16,7 @@ use Wavevision\NetteTests\TestCases\PresenterTestCase;
 
 class ExamplePresenterTest extends PresenterTestCase
 {
+
 	use InjectRequestMock;
 
 	public function testFlashMessage(): void
