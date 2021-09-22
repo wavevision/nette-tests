@@ -19,7 +19,7 @@ class RequestMock extends Request
 	private ?bool $ajaxMock;
 
 	private ?string $rawBodyMock;
-	
+
 	private bool $rawBodyMockIsSet;
 
 	/**
@@ -30,9 +30,9 @@ class RequestMock extends Request
 	private ?string $methodMock;
 
 	/**
-	 * @var array<mixed>
+	 * @var array<mixed>|null
 	 */
-	private array $headersMock;
+	private ?array $headersMock;
 
 	private bool $isSameSiteMock;
 
@@ -56,7 +56,7 @@ class RequestMock extends Request
 		$this->filesMock = [];
 		$this->methodMock = null;
 		$this->rawBodyMockIsSet = false;
-		$this->headersMock = [];
+		$this->headersMock = null;
 		$this->isSameSiteMock = true;
 		$this->postMock = [];
 		$this->queryMock = null;
@@ -152,10 +152,21 @@ class RequestMock extends Request
 	 */
 	public function getHeader($header): ?string
 	{
-		if (isset($this->headersMock[$header])) {
-			return $this->headersMock[$header];
+		if ($this->headersMock === null) {
+			parent::getHeader($header);
 		}
-		return parent::getHeader($header);
+		return $this->headersMock[$header] ?? null;
+	}
+
+	/**
+	 * @return array<mixed>
+	 */
+	public function getHeaders(): array
+	{
+		if ($this->headersMock === null) {
+			return parent::getHeaders();
+		}
+		return $this->headersMock;
 	}
 
 	public function setRawBodyMock(?string $body): self
@@ -181,14 +192,12 @@ class RequestMock extends Request
 	}
 
 	/**
-	 * @param mixed $header
-	 * @param mixed $value
+	 * @param array<mixed> $headerMock
+	 * @return $this
 	 */
-	public function addHeaderMock($header, $value): RequestMock
+	public function setHeaderMock(array $headerMock): self
 	{
-		if (!isset($this->headersMock[$header])) {
-			$this->headersMock[$header] = $value;
-		}
+		$this->headersMock = $headerMock;
 		return $this;
 	}
 
