@@ -135,7 +135,7 @@ class RequestMock extends Request
 
 	public function getMethod(): string
 	{
-		return $this->methodMock ?? $this->method;
+		return $this->methodMock ?? parent::getMethod();
 	}
 
 	/**
