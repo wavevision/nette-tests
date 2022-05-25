@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d58de5e055ffa00bf0543a36c9a4e52c",
+    "content-hash": "6923b5533fb4db2a39302c912f25c576",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -77,22 +77,22 @@
         },
         {
             "name": "latte/latte",
-            "version": "v2.10.3",
+            "version": "v2.10.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "dd2c58863e830c22a2c6b85af63f37b829d255df"
+                "reference": "596b28bf098ebb852732d60b00538139a009c4db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/dd2c58863e830c22a2c6b85af63f37b829d255df",
-                "reference": "dd2c58863e830c22a2c6b85af63f37b829d255df",
+                "url": "https://api.github.com/repos/nette/latte/zipball/596b28bf098ebb852732d60b00538139a009c4db",
+                "reference": "596b28bf098ebb852732d60b00538139a009c4db",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-tokenizer": "*",
-                "php": ">=7.1 <8.1"
+                "php": ">=7.1 <8.2"
             },
             "conflict": {
                 "nette/application": "<2.4.1"
@@ -111,6 +111,9 @@
                 "nette/php-generator": "to use tag {templatePrint}",
                 "nette/utils": "to use filter |webalize"
             },
+            "bin": [
+                "bin/latte-lint"
+            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -152,9 +155,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/latte/issues",
-                "source": "https://github.com/nette/latte/tree/v2.10.3"
+                "source": "https://github.com/nette/latte/tree/v2.10.8"
             },
-            "time": "2021-02-22T11:17:13+00:00"
+            "time": "2022-01-04T14:13:28+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6021,5 +6024,5 @@
         "ext-fileinfo": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
