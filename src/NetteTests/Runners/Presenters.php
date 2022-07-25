@@ -61,6 +61,9 @@ class Presenters
 				$presenterRequest->getFiles()
 			)
 		);
+        if ($presenter instanceof Presenter) {
+            $presenter->session->close();
+        }
 		return new PresenterResponse($presenterRequest, $response);
 	}
 

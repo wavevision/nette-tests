@@ -118,9 +118,6 @@ trait PresenterAsserts
 
 	protected function runPresenter(PresenterRequest $presenterRequest): PresenterResponse
 	{
-		if (session_status() === PHP_SESSION_ACTIVE) {
-		    session_destroy();
-		}
 		$this->presenters->setup($presenterRequest);
 		return $this->presenters->run($presenterRequest);
 	}
