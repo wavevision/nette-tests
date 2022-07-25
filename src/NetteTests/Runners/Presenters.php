@@ -46,26 +46,26 @@ class Presenters
 		return $presenterRequest;
 	}
 
-	public function run(PresenterRequest $presenterRequest): PresenterResponse
-	{
-		foreach ($presenterRequest->getBeforeRunCallbacks() as $beforeRunCallback) {
-			$beforeRunCallback($presenterRequest);
-		}
-		$presenter = $presenterRequest->getPresenter();
-		$response = $presenter->run(
-			new Request(
-				$presenterRequest->getPresenterName(),
-				$presenterRequest->getMethod(),
-				$presenterRequest->getQuery(),
-				$presenterRequest->getPost(),
-				$presenterRequest->getFiles()
-			)
-		);
+    public function run(PresenterRequest $presenterRequest): PresenterResponse
+    {
+        foreach ($presenterRequest->getBeforeRunCallbacks() as $beforeRunCallback) {
+            $beforeRunCallback($presenterRequest);
+        }
+        $presenter = $presenterRequest->getPresenter();
+        $response = $presenter->run(
+            new Request(
+                $presenterRequest->getPresenterName(),
+                $presenterRequest->getMethod(),
+                $presenterRequest->getQuery(),
+                $presenterRequest->getPost(),
+                $presenterRequest->getFiles()
+            )
+        );
         if ($presenter instanceof Presenter) {
             $presenter->session->close();
         }
-		return new PresenterResponse($presenterRequest, $response);
-	}
+        return new PresenterResponse($presenterRequest, $response);
+    }
 
 	private function createPresenter(string $name): IPresenter
 	{
