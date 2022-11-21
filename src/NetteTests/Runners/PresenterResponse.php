@@ -2,7 +2,7 @@
 
 namespace Wavevision\NetteTests\Runners;
 
-use Nette\Application\IResponse;
+use Nette\Application\Response;
 use Nette\SmartObject;
 
 class PresenterResponse
@@ -12,9 +12,9 @@ class PresenterResponse
 
 	private PresenterRequest $presenterRequest;
 
-	private IResponse $response;
+	private Response $response;
 
-	public function __construct(PresenterRequest $presenterRequest, IResponse $response)
+	public function __construct(PresenterRequest $presenterRequest, Response $response)
 	{
 		$this->presenterRequest = $presenterRequest;
 		$this->response = $response;
@@ -25,7 +25,7 @@ class PresenterResponse
 		return $this->presenterRequest;
 	}
 
-	public function getResponse(): IResponse
+	public function getResponse(): Response
 	{
 		return $this->response;
 	}
